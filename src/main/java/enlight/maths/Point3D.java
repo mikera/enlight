@@ -115,6 +115,15 @@ public final class Point3D {
 		return "Point3D ["+x+", "+y+", "+z+"]";
 	}
 
+	private static final double APPROX_EPSILON=0.0001;
+	
+	public boolean approxEquals(Point3D a) {
+		if ((x<(a.x-APPROX_EPSILON))||(x>(a.x+APPROX_EPSILON))) return false;
+		if ((y<(a.y-APPROX_EPSILON))||(y>(a.y+APPROX_EPSILON))) return false;
+		if ((z<(a.z-APPROX_EPSILON))||(z>(a.z+APPROX_EPSILON))) return false;
+		return true;
+	}
+
 
 	
 }
