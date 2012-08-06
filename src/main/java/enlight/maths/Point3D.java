@@ -61,4 +61,34 @@ public class Point3D {
 		z*=factor;
 	}
 	
+	public void normalize() {
+		double l=length();
+		if (l==0) {set(0,0,0); return;}
+		double factor=1.0/l;
+		mul(factor);
+	}
+
+	public double lengthSquared() {
+		return x*x+y*y+z*z;
+	}
+	
+	public double length() {
+		return Math.sqrt(x*x+y*y+z*z);
+	}
+
+	private void set(double x, double y, double z) {
+		this.x=x;
+		this.y=y;
+		this.z=y;
+	}
+	
+	@Override public boolean equals(Object a) {
+		if (!(a instanceof Point3D)) return false;
+		return equals((Point3D)a);
+	}
+	
+	public boolean equals(Point3D a) {
+		return ((x==a.x)&&(y==a.y)&&(z==a.z));
+	}
+	
 }
