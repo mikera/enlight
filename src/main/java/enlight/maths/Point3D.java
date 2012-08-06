@@ -62,9 +62,9 @@ public class Point3D {
 	}
 	
 	public void normalize() {
-		double l=length();
-		if (l==0) {set(0,0,0); return;}
-		double factor=1.0/l;
+		double len=length();
+		if (len==0) {set(0,0,0); return;}
+		double factor=1.0/len;
 		mul(factor);
 	}
 
@@ -76,10 +76,10 @@ public class Point3D {
 		return Math.sqrt(x*x+y*y+z*z);
 	}
 
-	private void set(double x, double y, double z) {
+	public void set(double x, double y, double z) {
 		this.x=x;
 		this.y=y;
-		this.z=y;
+		this.z=z;
 	}
 	
 	@Override public boolean equals(Object a) {
@@ -89,6 +89,11 @@ public class Point3D {
 	
 	public boolean equals(Point3D a) {
 		return ((x==a.x)&&(y==a.y)&&(z==a.z));
+	}
+	
+	@Override
+	public String toString() {
+		return "Point3D ["+x+", "+y+", "+z+"]";
 	}
 	
 }
