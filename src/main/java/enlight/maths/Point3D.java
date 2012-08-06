@@ -1,6 +1,6 @@
 package enlight.maths;
 
-public class Point3D {
+public final class Point3D {
 	public double x;
 	public double y;
 	public double z;
@@ -82,6 +82,25 @@ public class Point3D {
 		this.z=z;
 	}
 	
+	public void set(Point3D a) {
+		x=a.x;
+		y=a.y;
+		z=a.z;
+	}
+	
+	public double dot(Point3D a) {
+		return x*a.x+y*a.y+z*a.z;
+	}
+	
+	public void cross(Point3D a) {
+		double tx=y*a.z-z*a.y;
+		double ty=z*a.x-x*a.z;
+		double tz=x*a.y-y*a.x;			
+		x=tx;
+		y=ty;
+		z=tz;
+	}
+	
 	@Override public boolean equals(Object a) {
 		if (!(a instanceof Point3D)) return false;
 		return equals((Point3D)a);
@@ -95,5 +114,7 @@ public class Point3D {
 	public String toString() {
 		return "Point3D ["+x+", "+y+", "+z+"]";
 	}
+
+
 	
 }
