@@ -4,17 +4,30 @@
 	<groupId>net.mikera</groupId>
 	<artifactId>enlight</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
 				<configuration>
 					<source>1.7</source>
 					<target>1.6</target>
 				</configuration>
 			</plugin>
+			<plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <configuration>
+                    <mainClass>glaze.TestApp</mainClass>
+                 </configuration>
+            </plugin>
 			<plugin>
 				<groupId>com.theoryinpractise</groupId>
 				<artifactId>clojure-maven-plugin</artifactId>
@@ -70,7 +83,7 @@
 		<dependency>
 			<groupId>net.mikera</groupId>
 			<artifactId>clisk</artifactId>
-			<version>0.3.0</version>
+			<version>0.4.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.clojure</groupId>
