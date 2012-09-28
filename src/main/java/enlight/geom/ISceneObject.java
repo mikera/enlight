@@ -1,9 +1,9 @@
 package enlight.geom;
 
-import enlight.maths.Point3D;
+import mikera.vectorz.Vector3;
 
 public interface ISceneObject {
-	public void getSupport (Point3D normal, Point3D supportOut);
+	public void getSupport (Vector3 normal, Vector3 supportOut);
 	
-	public void getIntersection(Point3D start, Point3D direction, double dist, IntersectionInfo result);
+	public void getIntersection(Vector3 start, Vector3 direction, double dist, IntersectionInfo result);
 }
