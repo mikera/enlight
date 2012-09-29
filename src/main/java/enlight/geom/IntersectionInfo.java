@@ -12,5 +12,5 @@ public class IntersectionInfo {
 	public final Vector3 surfaceNormal=new Vector3();
 	public double intersectionDistance=0.0;
 	public boolean hasIntersection=false;
- 	public boolean interior=false;;
+ 	public boolean interior=false;
 }
