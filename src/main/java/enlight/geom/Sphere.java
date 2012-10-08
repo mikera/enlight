@@ -23,7 +23,7 @@ public class Sphere implements ISceneObject {
 			IntersectionInfo result) {
 		// c is centre of sphere translated so line starts at 0,0
 		Vector3 c=new Vector3(centre);
-		c.subtract(start);
+		c.sub(start);
 		
 		double centreDist = direction.dotProduct(c);
 
@@ -57,7 +57,7 @@ public class Sphere implements ISceneObject {
 		result.intersectionPoint.set(direction);
 		result.intersectionPoint.multiply(collDist);
 		result.surfaceNormal.set(result.intersectionPoint);
-		result.surfaceNormal.subtract(c);
+		result.surfaceNormal.sub(c);
 		result.surfaceNormal.normalise();
 		if (result.interior) result.surfaceNormal.multiply(-1.0);
 		result.intersectionPoint.add(start);

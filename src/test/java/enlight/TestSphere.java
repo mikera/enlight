@@ -20,8 +20,8 @@ public class TestSphere {
 		assertEquals(0.0,ii.intersectionPoint.y, 0.0001);
 		assertEquals(3.0,ii.intersectionPoint.z, 0.0001);
 		assertTrue(ii.hasIntersection);
-		assertTrue(ii.surfaceNormal.approxEquals(new Vector3(1,0,0)));
-		assertTrue(ii.intersectionPoint.approxEquals(new Vector3(2,0,3)));
+		assertTrue(ii.surfaceNormal.epsilonEquals(new Vector3(1,0,0)));
+		assertTrue(ii.intersectionPoint.epsilonEquals(new Vector3(2,0,3)));
 		assertTrue(!ii.interior);
 
 		s.getIntersection(new Vector3(3,0,3), new Vector3(1,0,0), 0, ii);
@@ -37,8 +37,8 @@ public class TestSphere {
 		assertEquals(0.0,ii.intersectionPoint.x, 0.0001);
 		assertEquals(2.0,ii.intersectionPoint.y, 0.0001);
 		assertEquals(3.0,ii.intersectionPoint.z, 0.0001);
-		assertTrue(ii.surfaceNormal.approxEquals(new Vector3(0,-1,0)));
-		assertTrue(ii.intersectionPoint.approxEquals(new Vector3(0,2,3)));
+		assertTrue(ii.surfaceNormal.epsilonEquals(new Vector3(0,-1,0)));
+		assertTrue(ii.intersectionPoint.epsilonEquals(new Vector3(0,2,3)));
 		assertTrue(ii.interior);
 
 	}
