@@ -16,19 +16,6 @@
 		<developerConnection>scm:git:git@github.com:mikera/${project.artifactId}.git</developerConnection>
 	</scm>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.2.1</version>
-				<configuration>
-					<mainClass>glaze.TestApp</mainClass>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-
 	<dependencies>
 		<dependency>
 			<groupId>net.mikera</groupId>
