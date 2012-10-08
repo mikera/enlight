@@ -2,7 +2,7 @@ package enlight.geom;
 
 import mikera.vectorz.Vector3;
 
-public class Sphere implements ISceneObject {
+public class Sphere extends AFinitePrimitive {
 	private final Vector3 centre=new Vector3();
 	private final double radius;
 	
