@@ -1,7 +1,6 @@
 package enlight;
 
 import mikera.vectorz.Vector3;
-import clisk.Function;
 import enlight.geom.ISceneObject;
 
 public class Tracer {
@@ -18,7 +17,6 @@ public class Tracer {
 		Vector3 d=cameraDirection.clone();
 		d.addMultiple(upVector, 1-(2*sy));
 		d.addMultiple(rightVector, (2*sx)-1);
-		
 		
 	}
 }

@@ -8,7 +8,7 @@ import mikera.vectorz.Vector3;
  *
  */
 public class IntersectionInfo {
-	public Object intersectionObject=false;
+	public APrimitive intersectionObject=null;
 	public final Vector3 intersectionPoint=new Vector3();
 	public final Vector3 surfaceNormal=new Vector3();
 	public double intersectionDistance=0.0;
