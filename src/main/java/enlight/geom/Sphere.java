@@ -28,18 +28,18 @@ public class Sphere implements ISceneObject {
 		double centreDist = direction.dotProduct(c);
 
 		// discriminant of quadratic
-		double disc=centreDist*centreDist-c.magnitudeSquared()+radius*radius;
+		double disc=(centreDist*centreDist)-c.magnitudeSquared()+(radius*radius);
 		
 		// bailout if line misses completely
 		if (disc<0) {
-			result.hasIntersection=false;
+			result.intersectionObject=null;
 			return;
 		}
 		
 		double rootDisc=Math.sqrt(disc);
 		// bailout if start of line is past sphere
 		if (dist>=(centreDist+rootDisc)) {
-			result.hasIntersection=false;
+			result.intersectionObject=null;
 			return;			
 		}
 		
@@ -53,7 +53,7 @@ public class Sphere implements ISceneObject {
 		}
 		if (dist>collDist) throw new Error("Shouldn't be possible!");
 		
-		result.hasIntersection=true;
+		result.intersectionObject=this;
 		result.intersectionPoint.set(direction);
 		result.intersectionPoint.multiply(collDist);
 		result.surfaceNormal.set(result.intersectionPoint);

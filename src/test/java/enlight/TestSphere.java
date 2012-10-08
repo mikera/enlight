@@ -19,13 +19,13 @@ public class TestSphere {
 		assertEquals(2.0,ii.intersectionPoint.x, 0.0001);
 		assertEquals(0.0,ii.intersectionPoint.y, 0.0001);
 		assertEquals(3.0,ii.intersectionPoint.z, 0.0001);
-		assertTrue(ii.hasIntersection);
+		assertTrue(ii.hasIntersection());
 		assertTrue(ii.surfaceNormal.epsilonEquals(new Vector3(1,0,0)));
 		assertTrue(ii.intersectionPoint.epsilonEquals(new Vector3(2,0,3)));
 		assertTrue(!ii.interior);
 
 		s.getIntersection(new Vector3(3,0,3), new Vector3(1,0,0), 0, ii);
-		assertTrue(!ii.hasIntersection);
+		assertTrue(!ii.hasIntersection());
 	}
 	
 	@Test public void testFromInside() {
