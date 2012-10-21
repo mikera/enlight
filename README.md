@@ -3,7 +3,7 @@ enlight
 
 A Clojure raytracer
 
-(IN DEVELOPMENT)
+(IN DEVELOPMENT - NOTHING MUCH TO SEE HERE YET)
 
 Planned features:
 
