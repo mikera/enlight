@@ -13,9 +13,12 @@ public class Sphere extends AFinitePrimitive {
 	
 	
 	@Override
-	public void getSupport(Vector3 normal, Vector3 supportOut) {
-		supportOut.set(centre);
-		supportOut.addMultiple(normal, radius);
+	public void getSupport(Vector3 normal, IntersectionInfo supportOut) {
+		supportOut.intersectionObject=this;
+		supportOut.intersectionPoint.set(centre);
+		supportOut.intersectionPoint.addMultiple(normal, radius);
+		supportOut.surfaceNormal.set(normal);
+		supportOut.intersectionDistance=Double.NaN;
 	}
 	
 	@Override
@@ -62,6 +65,5 @@ public class Sphere extends AFinitePrimitive {
 		if (result.interior) result.surfaceNormal.multiply(-1.0);
 		result.intersectionPoint.add(start);
 		result.intersectionDistance=collDist;
-	}
-	
+	}	
 }

@@ -12,4 +12,7 @@ public abstract class APrimitive extends ASceneObject {
 		colourOut.setValues(1,1,1,1);
 	}
 
+	public abstract void getSupport(Vector3 normal, IntersectionInfo resultOut);
+	
+	public abstract void getIntersection(Vector3 start, Vector3 direction, double dist, IntersectionInfo result);
 }
