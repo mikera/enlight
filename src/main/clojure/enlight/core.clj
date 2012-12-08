@@ -12,34 +12,20 @@
   ([& vals]
     `(throw (java.lang.RuntimeException. (str ~@vals)))))
 
-(def EXAMPLE-SCENE
-  {:camera {:position [0 0 -5]
-            :direction [0 0 1]
-            :up [0 1 0]
-            :right [1 0 0]}})
-
-
-(defn vec3
-  "Coerces to a Vector3"
-  (^Vector3 [a]
-    (let [^AVector v (v/to-vector a)]
-      (if (instance? Vector3 v)
-        v
-        (error "Can't convert to Vector3: " (str a))))))
 
 (defn compile-camera
   "Compiles a camera to ensure necessary vectors are present"
   ([camera]
     (let [camera (or camera {})
-          pos (or (:position camera) (Vector3.))
-          dir (or (:direction camera) (v/of 0 0 1))
-          up (or (:up camera) (v/of 0 1 0))
-          right (or (:right camera) (v/of 1 0 0))]
+          pos (or (:position camera) (v/vec3))
+          dir (or (:direction camera) (v/vec3 0 0 1))
+          up (or (:up camera) (v/vec3 0 1 0))
+          right (or (:right camera) (v/vec3 1 0 0))]
       (merge camera
-             {:up (vec3 up)
-              :right (vec3 right)
-              :direction (vec3 dir)
-              :position (vec3 pos)}))))
+             {:up (v/vec3 up)
+              :right (v/vec3 right)
+              :direction (v/vec3 dir)
+              :position (v/vec3 pos)}))))
 
 (defn new-image
   "Creates a new blank image"
@@ -49,7 +35,7 @@
 (defn compile-scene
   "Optimises a scene for rendering"
   ([scene]
-    (let [scene (or scene EXAMPLE-SCENE)
+    (let [scene (or scene {})
           scene (assoc scene :scene (compile-camera (:camera scene)))]
       scene)))
 
@@ -59,7 +45,7 @@
 
 (defn position 
   (^Vector3 [camera]
-    (or (:position camera) (Vector3.))))
+    (or (:position camera) (v/vec3))))
 
 (defn direction 
   (^Vector3 [camera]
@@ -73,6 +59,11 @@
   (^Vector3 [camera]
     (:right camera)))
 
+(defn argb-from-vector4 
+  "Converts a colour vector into an ARGB colour value"
+  (^long [^Vector4 colour]
+    (mikera.image.Colours/getARGBClamped (.x colour) (.y colour) (.z colour) (.t colour))))
+
 (defn render 
   "Render a scene to a new bufferedimage"
   (^BufferedImage [scene
@@ -82,16 +73,17 @@
         height (int height)
         scene (compile-scene scene)
         camera (:camera scene)
-        colour-result (Vector4.)
+        colour-result (v/vec4 [0.5 0 0.8 1])
         ^Vector3 camera-pos (position camera)
         ^Vector3 camera-up (up-direction camera)
         ^Vector3 camera-right (right-direction camera)
-        ^Vector3 direction (direction camera)
+        ^Vector3 camera-direction (direction camera)
+        ^Vector3 dir (v/vec3)
         ^BufferedImage im (new-image width height)]
     (dotimes [ix width]
       (dotimes [iy height]
         (let []
-          (.setRGB im ix iy (mikera.image.Colours/randomARGBColour)))))
+          (.setRGB im ix iy (argb-from-vector4 colour-result)))))
     im)))
 
 (defn display
