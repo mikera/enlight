@@ -25,7 +25,7 @@
     (let [^AVector v (v/to-vector a)]
       (if (instance? Vector3 v)
         v
-        (error "Can't convert to vector3: " (str a))))))
+        (error "Can't convert to Vector3: " (str a))))))
 
 (defn compile-camera
   "Compiles a camera to ensure necessary vectors are present"
@@ -102,12 +102,8 @@
 
 (defn show 
   "Renders and displays a scene in a new Frame"
-  ([x
+  ([scene
     & {:keys [width height title] 
        :or {width 256 height 256}
        :as params}]
-  (cond
-    (instance? BufferedImage x)
-      (display x :title title)
-    :else 
-      (display (apply render x (apply concat params)) :title title))))
+    (display (apply render scene (apply concat params)) :title title)))
