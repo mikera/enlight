@@ -13,8 +13,10 @@
     `(throw (java.lang.RuntimeException. (str ~@vals)))))
 
 (def EXAMPLE-SCENE
-  {:camera {:position (v/of )}})
-
+  {:camera {:position [0 0 -5]
+            :direction [0 0 1]
+            :up [0 1 0]
+            :right [1 0 0]}})
 
 
 (defn vec3
