@@ -92,9 +92,20 @@
           (.setRGB im ix iy (mikera.image.Colours/randomARGBColour)))))
     im)))
 
-(defn show [x]
+(defn display
+  "Displays an image in a new frame"
+  [^BufferedImage image
+   & {:keys [title]}]
+  (mikera.gui.Frames/displayImage image (str (or title "Enlight Render"))))
+
+(defn show 
+  "Renders and displays a scene in a new Frame"
+  ([x
+    & {:keys [width height title] 
+       :or {width 256 height 256}
+       :as params}]
   (cond
     (instance? BufferedImage x)
-      (mikera.gui.Frames/displayImage ^BufferedImage x "Enlight Render")
+      (display x :title title)
     :else 
-      (mikera.gui.Frames/displayImage ^BufferedImage (render x) "Enlight Render")))
+      (display (apply render x (apply concat params)) :title title))))
