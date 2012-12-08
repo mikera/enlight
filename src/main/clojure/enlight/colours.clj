@@ -5,7 +5,7 @@
 
 (defn rgb-from-vector 
   "Converts a colour vector into an ARGB colour value"
-  (^long [^Vector4 colour]
+  (^long [^AVector colour]
     (mikera.image.Colours/getRGBClamped (.get colour 0) (.get colour 1) (.get colour 2))))
 
 (defn argb-from-vector4 

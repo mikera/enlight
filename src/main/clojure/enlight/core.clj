@@ -1,5 +1,6 @@
 (ns enlight.core
   (require [mikera.vectorz.core :as v])
+  (require [enlight.colours :as c])
   (import [mikera.vectorz Vector3 Vector4 AVector Vectorz])
   (import [java.awt.image BufferedImage])
   (import [mikera.image]))
@@ -36,7 +37,7 @@
   "Optimises a scene for rendering"
   ([scene]
     (let [scene (or scene {})
-          scene (assoc scene :scene (compile-camera (:camera scene)))]
+          scene (assoc scene :camera (compile-camera (:camera scene)))]
       scene)))
 
 (defn trace-ray 
@@ -59,11 +60,6 @@
   (^Vector3 [camera]
     (:right camera)))
 
-(defn argb-from-vector4 
-  "Converts a colour vector into an ARGB colour value"
-  (^long [^Vector4 colour]
-    (mikera.image.Colours/getARGBClamped (.x colour) (.y colour) (.z colour) (.t colour))))
-
 (defn render 
   "Render a scene to a new bufferedimage"
   (^BufferedImage [scene
@@ -82,8 +78,13 @@
         ^BufferedImage im (new-image width height)]
     (dotimes [ix width]
       (dotimes [iy height]
-        (let []
-          (.setRGB im ix iy (argb-from-vector4 colour-result)))))
+        (let [xp (- (/ (double ix) width) 0.5)
+              yp (- (/ (double iy) height) 0.5)]
+          (.set dir camera-direction)
+          (v/add-multiple! dir camera-right xp)
+          (v/add-multiple! dir camera-up (- yp))
+          (v/normalise! dir)
+          (.setRGB im ix iy (c/rgb-from-vector dir)))))
     im)))
 
 (defn display
@@ -99,3 +100,7 @@
        :or {width 256 height 256}
        :as params}]
     (display (apply render scene (apply concat params)) :title title)))
+
+(defn test [] 
+  (show {})
+)
