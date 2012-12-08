@@ -60,6 +60,10 @@
   (^Vector3 [camera]
     (:right camera)))
 
+(defn trace-ray
+  ([scena ^Vector3 pos ^Vector3 dir ^Vector4 colour-result]
+    (.copyTo dir colour-result 0)))
+
 (defn render 
   "Render a scene to a new bufferedimage"
   (^BufferedImage [scene
@@ -84,7 +88,8 @@
           (v/add-multiple! dir camera-right xp)
           (v/add-multiple! dir camera-up (- yp))
           (v/normalise! dir)
-          (.setRGB im ix iy (c/rgb-from-vector dir)))))
+          (trace-ray scene camera-pos dir colour-result)
+          (.setRGB im ix iy (c/argb-from-vector4 colour-result)))))
     im)))
 
 (defn display
@@ -101,6 +106,6 @@
        :as params}]
     (display (apply render scene (apply concat params)) :title title)))
 
-(defn test [] 
+(defn testfunction [] 
   (show {})
 )
