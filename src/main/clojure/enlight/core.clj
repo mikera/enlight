@@ -9,17 +9,25 @@
 (set! *warn-on-reflection* true)
 (set! *unchecked-math* true)
 
+(def ^:dynamic *show-warnings* true)
+
 (defmacro error
   "Throws an error with the provided message(s)"
   ([& vals]
     `(throw (enlight.EnlightError. (str ~@vals)))))
 
+(defmacro warn
+  "Logs a warning"
+  ([& vals]
+    `(if *show-warnings*
+       (binding [*out* *err*]
+         (println (str "WARNING: " ~@vals))))))
 
 (defn compile-camera
   "Compiles a camera to ensure necessary vectors are present"
   ([args]
     (let [camera (or args {})
-          pos (or (:position camera) (v/vec3))
+          pos (or (:position camera) (warn "Camera has no position") (v/vec3))
           dir (or (:direction camera) (v/vec3 0 0 1))
           up (or (:up camera) (v/vec3 0 1 0))
           right (or (:right camera) (v/vec3 1 0 0))]
