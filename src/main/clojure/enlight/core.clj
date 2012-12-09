@@ -1,9 +1,10 @@
 (ns enlight.core
-  (require [mikera.vectorz.core :as v])
-  (require [enlight.colours :as c])
-  (import [mikera.vectorz Vector3 Vector4 AVector Vectorz])
-  (import [java.awt.image BufferedImage])
-  (import [mikera.image]))
+  (:require [mikera.vectorz.core :as v])
+  (:require [enlight.colours :as c])
+  (:refer-clojure :exclude [compile])
+  (:import [mikera.vectorz Vector3 Vector4 AVector Vectorz])
+  (:import [java.awt.image BufferedImage])
+  (:import [mikera.image]))
 
 (set! *warn-on-reflection* true)
 (set! *unchecked-math* true)
@@ -11,13 +12,13 @@
 (defmacro error
   "Throws an error with the provided message(s)"
   ([& vals]
-    `(throw (java.lang.RuntimeException. (str ~@vals)))))
+    `(throw (enlight.EnlightError. (str ~@vals)))))
 
 
 (defn compile-camera
   "Compiles a camera to ensure necessary vectors are present"
-  ([camera]
-    (let [camera (or camera {})
+  ([args]
+    (let [camera (or args {})
           pos (or (:position camera) (v/vec3))
           dir (or (:direction camera) (v/vec3 0 0 1))
           up (or (:up camera) (v/vec3 0 1 0))
@@ -33,16 +34,40 @@
   ([w h]
     (mikera.gui.ImageUtils/newImage (int w) (int h))))
 
-(defn compile-scene
-  "Optimises a scene for rendering"
+(defn compile-element 
+  "Compiles a single element of a scene graph with the provided args (may be nil)"
+  ([key args]
+    (case key
+      :camera (compile-camera args)
+      (error "Keyword not recognised [" key "]"))))
+
+(defn update-graph [graph key arg]
+  "Updates a graph with a given key and argument. arg may be nil."
+  (merge graph {key (compile-element key arg)}))
+
+(defn compile-scene-list
+  "Compiles a scene list for rendering into a scene graph"
   ([scene]
-    (let [scene (or scene {})
-          scene (assoc scene :camera (compile-camera (:camera scene)))]
-      scene)))
+    (let [empty-graph {}] 
+      (compile-scene-list empty-graph scene)))
+  ([graph s]
+    (if-let [s (seq s)]
+      (compile-scene-list graph (first s) (next s))
+      graph))
+  ([graph key xs]
+    (if-let [s (seq xs)]
+      (compile-scene-list graph key (first s) (next s))
+      (update-graph graph key nil)))
+  ([graph key arg xs]
+    (compile-scene-list (update-graph graph key arg) xs)))
+
+
+(defn compile-scene [scene]
+  (compile-scene-list scene))
 
 (defn trace-ray 
   "Raytraces a specific ray from the eye position, returning the colour in an out vector"
-  ([scene ^Vector3 pos ^Vector3 direction ^Vector4 colour-out]))
+  ([graph ^Vector3 pos ^Vector3 direction ^Vector4 colour-out]))
 
 (defn position 
   (^Vector3 [camera]
@@ -61,7 +86,7 @@
     (:right camera)))
 
 (defn trace-ray
-  ([scena ^Vector3 pos ^Vector3 dir ^Vector4 colour-result]
+  ([scene ^Vector3 pos ^Vector3 dir ^Vector4 colour-result]
     (.copyTo dir colour-result 0)))
 
 (defn render 
@@ -71,8 +96,8 @@
                  :or {width 256 height 256}}]
   (let [width (int width)
         height (int height)
-        scene (compile-scene scene)
-        camera (:camera scene)
+        graph (compile-scene scene)
+        camera (or (:camera graph) (error "Scene has no camera!"))
         colour-result (v/vec4 [0.5 0 0.8 1])
         ^Vector3 camera-pos (position camera)
         ^Vector3 camera-up (up-direction camera)
@@ -88,7 +113,7 @@
           (v/add-multiple! dir camera-right xp)
           (v/add-multiple! dir camera-up (- yp))
           (v/normalise! dir)
-          (trace-ray scene camera-pos dir colour-result)
+          (trace-ray graph camera-pos dir colour-result)
           (.setRGB im ix iy (c/argb-from-vector4 colour-result)))))
     im)))
 
@@ -108,4 +133,5 @@
 
 (defn testfunction [] 
   (show {})
+  (compile-scene {})
 )
