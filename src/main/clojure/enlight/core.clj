@@ -56,7 +56,10 @@
       graph))
   ([graph key xs]
     (if-let [s (seq xs)]
-      (compile-scene-list graph key (first s) (next s))
+      (let [args? (first s)]
+        (if (keyword? args?)
+          (compile-scene-list (update-graph graph key nil) args? (next s))
+          (compile-scene-list graph key (first s) (next s))))
       (update-graph graph key nil)))
   ([graph key arg xs]
     (compile-scene-list (update-graph graph key arg) xs)))
