@@ -17,7 +17,7 @@
     `(throw (enlight.EnlightError. (str ~@vals)))))
 
 (defmacro warn
-  "Logs a warning"
+  "Logs a warning as long as *show-warnings* is bound to true"
   ([& vals]
     `(if *show-warnings*
        (binding [*out* *err*]
@@ -27,10 +27,10 @@
   "Compiles a camera to ensure necessary vectors are present"
   ([args]
     (let [camera (or args {})
-          pos (or (:position camera) (warn "Camera has no position") (v/vec3))
-          dir (or (:direction camera) (v/vec3 0 0 1))
           up (or (:up camera) (v/vec3 0 1 0))
-          right (or (:right camera) (v/vec3 1 0 0))]
+          right (or (:right camera) (v/vec3 1 0 0))
+          pos (or (:position camera) (warn "Camera has no position!") (v/vec3))
+          dir (or (:direction camera) (warn "Camera has no direction!") (v/vec3 0 0 1))]
       (merge camera
              {:up (v/vec3 up)
               :right (v/vec3 right)
@@ -42,12 +42,21 @@
   ([w h]
     (mikera.gui.ImageUtils/newImage (int w) (int h))))
 
+(def ENLIGHT-KEYWORDS
+  "List of valid enlight keywords in scene description"
+  #{:camera :tag})
+
+(defn enlight-keyword? [x]
+  (ENLIGHT-KEYWORDS x))
+
 (defn compile-element 
   "Compiles a single element of a scene graph with the provided args (may be nil)"
   ([key args]
+    (or (enlight-keyword? key) (error "Not a valid enlight keyword! [" key "]"))
     (case key
       :camera (compile-camera args)
-      (error "Keyword not recognised [" key "]"))))
+      :tag args
+      (error "Enlight keyword not implemented! [" key "]"))))
 
 (defn update-graph [graph key arg]
   "Updates a graph with a given key and argument. arg may be nil."
@@ -64,9 +73,9 @@
       graph))
   ([graph key xs]
     (if-let [s (seq xs)]
-      (let [args? (first s)]
-        (if (keyword? args?)
-          (compile-scene-list (update-graph graph key nil) args? (next s))
+      (let [next-item (first s)]
+        (if (enlight-keyword? next-item)
+          (compile-scene-list (update-graph graph key nil) next-item (next s))
           (compile-scene-list graph key (first s) (next s))))
       (update-graph graph key nil)))
   ([graph key arg xs]
@@ -74,6 +83,7 @@
 
 
 (defn compile-scene [scene]
+  "Compiles a scene for rendering, applying any default behavious and validation"
   (compile-scene-list scene))
 
 (defn trace-ray 
