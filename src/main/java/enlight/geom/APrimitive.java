@@ -8,6 +8,8 @@ import mikera.vectorz.Vector4;
  * @author Mike
  */
 public abstract class APrimitive extends ASceneObject {
+	public abstract boolean isFinite();
+	
 	public void getAmbientColour(Vector3 position, Vector4 colourOut) {
 		colourOut.setValues(1,1,1,1);
 	}
