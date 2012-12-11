@@ -9,7 +9,7 @@
 (set! *warn-on-reflection* true)
 (set! *unchecked-math* true)
 
-(def ^:dynamic *show-warnings* true)
+(def ^:dynamic *show-warnings* false)
 
 (defmacro error
   "Throws an error with the provided message(s)"
