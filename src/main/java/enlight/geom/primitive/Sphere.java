@@ -1,5 +1,7 @@
-package enlight.geom;
+package enlight.geom.primitive;
 
+import enlight.geom.AFinitePrimitive;
+import enlight.geom.IntersectionInfo;
 import mikera.vectorz.Vector3;
 
 public class Sphere extends AFinitePrimitive {

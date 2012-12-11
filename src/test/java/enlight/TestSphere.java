@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import enlight.geom.IntersectionInfo;
-import enlight.geom.Sphere;
+import enlight.geom.primitive.Sphere;
 import mikera.vectorz.Vector3;
 
 public class TestSphere {
