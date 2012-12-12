@@ -3,6 +3,9 @@ package enlight;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Test;
 
 import enlight.geom.IntersectionInfo;
@@ -41,5 +44,18 @@ public class TestSphere {
 		assertTrue(ii.intersectionPoint.epsilonEquals(new Vector3(0,2,3)));
 		assertTrue(ii.interior);
 
+	}
+	
+	@Test public void testProperties() {
+		Sphere s=new Sphere(new Vector3(0,0,3),2);
+		Map<Object,Object> p=s.getProperties();
+		assertEquals(2.0,(Double)p.get(Key.RADIUS),0.0);
+		
+		HashMap<Object,Object> hm=new HashMap<Object,Object>();
+		hm.put(Key.RADIUS, 3.0);
+		
+		Sphere t=s.with(hm);
+		Map<Object,Object> q=t.getProperties();
+		assertEquals(3.0,(Double)q.get(Key.RADIUS),0.0);
 	}
 }
