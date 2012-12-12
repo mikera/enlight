@@ -34,6 +34,10 @@ public abstract class ASceneObject implements ISceneObject {
 		}
 	}
 	
+	public String toString() {
+		return getProperties().toString();
+	}
+	
 	public boolean isFinite() {
 		return false;
 	}

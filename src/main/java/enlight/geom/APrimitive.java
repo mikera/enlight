@@ -33,6 +33,7 @@ public abstract class APrimitive extends ASceneObject {
 	@Override
 	public HashMap<Object,Object> getProperties() {
 		HashMap<Object,Object> hm=super.getProperties();
+		hm.put(Key.TYPE, Key.SPHERE);
 		hm.put(Key.COLOUR, colourFunction);
 		return hm;
 	}

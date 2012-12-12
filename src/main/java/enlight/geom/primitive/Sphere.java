@@ -23,8 +23,7 @@ public class Sphere extends AFinitePrimitive {
 	protected Sphere(Sphere old, Map<Object,Object> props) {
 		super(old,props);
 		centre=(Vector3) (props.containsKey(Key.CENTRE)?props.get(Key.CENTRE):old.centre);
-		radius=((Number)(props.containsKey(Key.RADIUS)?props.get(Key.RADIUS):old.radius)).doubleValue();
-		
+		radius=((Number)(props.containsKey(Key.RADIUS)?props.get(Key.RADIUS):old.radius)).doubleValue();	
 	}
 	
 	@Override public Sphere with(Map<Object,Object> props) {
