@@ -1,6 +1,7 @@
 package enlight.geom;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import enlight.Key;
 import enlight.geom.Utils;
@@ -20,6 +21,11 @@ public abstract class APrimitive extends ASceneObject {
 		colourFunction=Utils.DEFAULT_RGB_FUNCTION;
 	}
 	
+	protected APrimitive(APrimitive old, Map<Object, Object> props) {
+		super(old,props);
+		colourFunction=(ATransform) (props.containsKey(Key.COLOUR)?props.get(Key.COLOUR):old.colourFunction);
+	}
+
 	public void getAmbientColour(Vector3 position, Vector3 colourOut) {
 		colourFunction.transform(position,colourOut);
 	}

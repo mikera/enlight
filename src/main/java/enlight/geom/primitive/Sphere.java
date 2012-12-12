@@ -1,6 +1,7 @@
 package enlight.geom.primitive;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import enlight.Key;
 import enlight.geom.AFinitePrimitive;
@@ -17,6 +18,17 @@ public class Sphere extends AFinitePrimitive {
 		hm.put(Key.CENTRE, centre);
 		hm.put(Key.RADIUS, Double.valueOf(radius));		
 		return hm;
+	}
+	
+	protected Sphere(Sphere old, Map<Object,Object> props) {
+		super(old,props);
+		centre=(Vector3) (props.containsKey(Key.CENTRE)?props.get(Key.CENTRE):old.centre);
+		radius=((Number)(props.containsKey(Key.RADIUS)?props.get(Key.RADIUS):old.radius)).doubleValue();
+		
+	}
+	
+	@Override public Sphere with(Map<Object,Object> props) {
+		return new Sphere(this,props);
 	}
 	
 	public Sphere(Vector3 centre, double radius) {
