@@ -5,11 +5,11 @@ import enlight.geom.IntersectionInfo;
 import mikera.vectorz.Vector3;
 
 public class Sphere extends AFinitePrimitive {
-	private final Vector3 centre=new Vector3();
+	private final Vector3 centre;
 	private final double radius;
 	
 	public Sphere(Vector3 centre, double radius) {
-		this.centre.set(centre);
+		this.centre=centre;
 		this.radius=radius;
 	}
 	

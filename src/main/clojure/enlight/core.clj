@@ -3,6 +3,8 @@
   (:require [enlight.colours :as c])
   (:refer-clojure :exclude [compile])
   (:import [mikera.vectorz Vector3 Vector4 AVector Vectorz])
+  (:import [enlight.geom ASceneObject IntersectionInfo])
+  (:import [enlight.geom.primitive Sphere SkySphere])
   (:import [java.awt.image BufferedImage])
   (:import [mikera.image]))
 
@@ -23,6 +25,24 @@
        (binding [*out* *err*]
          (println (str "WARNING: " ~@vals))))))
 
+;; ===========================================================
+;; primitive constructors
+
+(defn sphere 
+  (^ASceneObject []
+    (sphere (v/vec3) 1.0))
+  (^ASceneObject [centre radius]
+    (Sphere. (v/vec centre) 1.0)))
+
+
+;; ===========================================================
+;; scene compilation
+
+(defn compile-object 
+  "Compiles a scene object"
+  ([obj]
+    obj))
+
 (defn compile-camera
   "Compiles a camera to ensure necessary vectors are present"
   ([args]
@@ -37,14 +57,11 @@
               :direction (v/vec3 dir)
               :position (v/vec3 pos)}))))
 
-(defn new-image
-  "Creates a new blank image"
-  ([w h]
-    (mikera.gui.ImageUtils/newImage (int w) (int h))))
+
 
 (def ENLIGHT-KEYWORDS
   "List of valid enlight keywords in scene description"
-  #{:camera :tag})
+  #{:camera :tag :root})
 
 (defn enlight-keyword? [x]
   (ENLIGHT-KEYWORDS x))
@@ -55,6 +72,7 @@
     (or (enlight-keyword? key) (error "Not a valid enlight keyword! [" key "]"))
     (case key
       :camera (compile-camera args)
+      :root (compile-object args)
       :tag args
       (error "Enlight keyword not implemented! [" key "]"))))
 
@@ -86,10 +104,6 @@
   "Compiles a scene for rendering, applying any default behavious and validation"
   (compile-scene-list scene))
 
-(defn trace-ray 
-  "Raytraces a specific ray from the eye position, returning the colour in an out vector"
-  ([graph ^Vector3 pos ^Vector3 direction ^Vector4 colour-out]))
-
 (defn position 
   (^Vector3 [camera]
     (or (:position camera) (v/vec3))))
@@ -106,9 +120,27 @@
   (^Vector3 [camera]
     (:right camera)))
 
+;; ======================================================
+;; Raytracer core 
+
 (defn trace-ray
-  ([scene ^Vector3 pos ^Vector3 dir ^Vector4 colour-result]
-    (.copyTo dir colour-result 0)))
+  ([^ASceneObject scene-object ^Vector3 pos ^Vector3 dir ^Vector4 colour-result]
+    (let [result (IntersectionInfo.)]
+      (trace-ray scene-object pos dir colour-result result)))
+  ([^ASceneObject scene-object ^Vector3 pos ^Vector3 dir ^Vector4 colour-result ^IntersectionInfo result]
+    (.getIntersection scene-object pos dir 0.0 result)
+    (if (.hasIntersection result)
+      (let [hit-object (.intersectionObject result)
+            temp (v/vec3)]
+        (.getAmbientColour hit-object pos temp)
+        (.copyTo temp colour-result 0))
+      (.copyTo dir colour-result 0))))
+
+
+(defn new-image
+  "Creates a new blank image"
+  ([w h]
+    (mikera.gui.ImageUtils/newImage (int w) (int h))))
 
 (defn render 
   "Render a scene to a new bufferedimage"
@@ -118,6 +150,7 @@
   (let [width (int width)
         height (int height)
         graph (compile-scene scene)
+        ^ASceneObject root (or (:root graph) (error "Scene has no root object!"))
         camera (or (:camera graph) (error "Scene has no camera!"))
         colour-result (v/vec4 [0.5 0 0.8 1])
         ^Vector3 camera-pos (position camera)
@@ -134,7 +167,7 @@
           (v/add-multiple! dir camera-right xp)
           (v/add-multiple! dir camera-up (- yp))
           (v/normalise! dir)
-          (trace-ray graph camera-pos dir colour-result)
+          (trace-ray (:root graph) camera-pos dir colour-result)
           (.setRGB im ix iy (c/argb-from-vector4 colour-result)))))
     im)))
 

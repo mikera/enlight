@@ -14,6 +14,10 @@ public class IntersectionInfo {
 	public double intersectionDistance=0.0;
  	public boolean interior=false;
  	
+ 	public IntersectionInfo() {
+ 		// use defaults
+ 	}
+ 	
  	public boolean hasIntersection() {
  		return intersectionObject!=null;
  	}

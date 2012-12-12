@@ -5,7 +5,7 @@ import mikera.transformz.ATransform;
 import mikera.vectorz.Vector3;
 
 /**
- * Abstract base class for primitives that can be hit by rays
+ * Abstract base class for primitives (anything that can be hit by rays)
  * @author Mike
  */
 public abstract class APrimitive extends ASceneObject {
@@ -23,5 +23,5 @@ public abstract class APrimitive extends ASceneObject {
 
 	public abstract void getSupport(Vector3 normal, IntersectionInfo resultOut);
 	
-	public abstract void getIntersection(Vector3 start, Vector3 direction, double dist, IntersectionInfo result);
+	public abstract void getIntersection(Vector3 start, Vector3 direction, double startDist, IntersectionInfo result);
 }
