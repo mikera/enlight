@@ -18,7 +18,7 @@ public abstract class APrimitive extends ASceneObject {
 	}
 	
 	public void getAmbientColour(Vector3 position, Vector3 colourOut) {
-		colourOut.setValues(1,1,1,1);
+		colourFunction.transform(position,colourOut);
 	}
 
 	public abstract void getSupport(Vector3 normal, IntersectionInfo resultOut);
