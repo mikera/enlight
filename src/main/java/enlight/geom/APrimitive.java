@@ -1,7 +1,8 @@
 package enlight.geom;
 
+import enlight.geom.Utils;
+import mikera.transformz.ATransform;
 import mikera.vectorz.Vector3;
-import mikera.vectorz.Vector4;
 
 /**
  * Abstract base class for primitives that can be hit by rays
@@ -10,7 +11,13 @@ import mikera.vectorz.Vector4;
 public abstract class APrimitive extends ASceneObject {
 	public abstract boolean isFinite();
 	
-	public void getAmbientColour(Vector3 position, Vector4 colourOut) {
+	private final ATransform colourFunction;
+	
+	public APrimitive() {
+		colourFunction=Utils.DEFAULT_RGB_FUNCTION;
+	}
+	
+	public void getAmbientColour(Vector3 position, Vector3 colourOut) {
 		colourOut.setValues(1,1,1,1);
 	}
 
