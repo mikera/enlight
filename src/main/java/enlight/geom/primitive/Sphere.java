@@ -1,5 +1,8 @@
 package enlight.geom.primitive;
 
+import java.util.HashMap;
+
+import enlight.Key;
 import enlight.geom.AFinitePrimitive;
 import enlight.geom.IntersectionInfo;
 import mikera.vectorz.Vector3;
@@ -7,6 +10,14 @@ import mikera.vectorz.Vector3;
 public class Sphere extends AFinitePrimitive {
 	private final Vector3 centre;
 	private final double radius;
+	
+	@Override
+	public HashMap<Object,Object> getProperties() {
+		HashMap<Object,Object> hm=super.getProperties();
+		hm.put(Key.CENTRE, centre);
+		hm.put(Key.RADIUS, Double.valueOf(radius));		
+		return hm;
+	}
 	
 	public Sphere(Vector3 centre, double radius) {
 		this.centre=centre;
