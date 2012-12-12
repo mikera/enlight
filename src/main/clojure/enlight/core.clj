@@ -131,7 +131,7 @@
     (.getIntersection scene-object pos dir 0.0 result)
     (if (.hasIntersection result)
       (let [hit-object (.intersectionObject result)
-            temp (v/vec3)]
+            temp (v/vec3)] ;; allocation! kill!
         (.getAmbientColour hit-object pos temp)
         (.copyTo temp colour-result 0))
       (.copyTo dir colour-result 0))))
