@@ -35,7 +35,9 @@ public abstract class ASceneObject implements ISceneObject {
 	}
 	
 	public String toString() {
-		return getProperties().toString();
+		return super.toString();
+		// TODO: fix this once we get latest vectorz with fixed hashcodes
+		// return getProperties().toString();
 	}
 	
 	public boolean isFinite() {
