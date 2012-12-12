@@ -1,5 +1,8 @@
 package enlight.geom;
 
+import java.util.HashMap;
+
+import enlight.Key;
 import enlight.geom.Utils;
 import mikera.transformz.ATransform;
 import mikera.vectorz.Vector3;
@@ -19,6 +22,13 @@ public abstract class APrimitive extends ASceneObject {
 	
 	public void getAmbientColour(Vector3 position, Vector3 colourOut) {
 		colourFunction.transform(position,colourOut);
+	}
+	
+	@Override
+	public HashMap<Object,Object> getProperties() {
+		HashMap<Object,Object> hm=super.getProperties();
+		hm.put(Key.COLOUR, colourFunction);
+		return hm;
 	}
 
 	public abstract void getSupport(Vector3 normal, IntersectionInfo resultOut);
