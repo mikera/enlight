@@ -92,4 +92,9 @@ public class BoundBox implements Cloneable {
 	public BoundBox clone() {
 		return new BoundBox(this);
 	}
+
+	public boolean contains(int x, int y, int z) {
+		return	(x>=lower.x)&&(y>=lower.y)&&(z>=lower.z)
+				&&(x<=upper.x)&&(y<=upper.y)&&(z<=upper.z);
+	}
 }
