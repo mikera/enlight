@@ -12,7 +12,9 @@
             :direction [0 0 1]
             :up [0 1 0]
             :right [1 0 0]}
-   :root (with (sphere) {:colour (function (clisk.functions/take-components 3 (clisk.patterns/vsnoise)))})
+   :root (union 
+           [(with (sphere) {:colour (function (clisk.functions/take-components 3 (clisk.patterns/vsnoise)))})
+            (with (sphere) {:centre (v/vec3 [-1 0 0])})]) 
   ])
 
 

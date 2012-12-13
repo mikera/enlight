@@ -26,7 +26,7 @@ public final class Union extends ACompositeObject {
 		finite=!anyInfinite;
 	}
 	
-	public Union of(Collection<ASceneObject> objects) {
+	public static Union of(Collection<ASceneObject> objects) {
 		return new Union(objects.toArray(new ASceneObject[objects.size()]));
 	}
 	

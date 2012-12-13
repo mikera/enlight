@@ -6,7 +6,7 @@
   (:import [mikera.vectorz Vector3 Vector4 AVector Vectorz])
   (:import [enlight.model ASceneObject IntersectionInfo])
   (:import [mikera.vectorz.geom Ray BoundBox])
-  (:import [enlight.model.primitive Sphere SkySphere])
+  (:import [enlight.model.primitive Sphere SkySphere Union])
   (:import [java.awt.image BufferedImage])
   (:import [mikera.image]))
 
@@ -14,6 +14,8 @@
 (set! *unchecked-math* true)
 
 (def ^:dynamic *show-warnings* false)
+
+(declare compile-object)
 
 (defmacro error
   "Throws an error with the provided message(s)"
@@ -40,6 +42,10 @@
   "Modifies a scene object with a map of new/updated property values. Properties not valid for the given object are ignored"
   ([^ASceneObject object props]
     (.with object props)))
+
+(defn union
+  (^ASceneObject [objects]
+    (Union/of ^java.util.List (vec objects))))
 
 (defmacro function
   [node]
