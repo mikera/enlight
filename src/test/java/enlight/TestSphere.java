@@ -26,8 +26,7 @@ public class TestSphere {
 		assertTrue(ii.intersectionPoint.epsilonEquals(new Vector3(2,0,3)));
 		assertTrue(!ii.interior);
 
-		s.getIntersection(new Ray(new Vector3(3,0,3), new Vector3(1,0,0)), ii);
-		assertTrue(!ii.hasIntersection());
+		assertFalse(s.getIntersection(new Ray(new Vector3(3,0,3), new Vector3(1,0,0)), ii));
 	}
 	
 	@Test public void testRayPast() {
