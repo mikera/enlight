@@ -37,12 +37,8 @@ public class Sphere extends AFinitePrimitive {
 	
 	
 	@Override
-	public void getSupport(Vector3 normal, IntersectionInfo supportOut) {
-		supportOut.intersectionObject=this;
-		supportOut.intersectionPoint.set(centre);
-		supportOut.intersectionPoint.addMultiple(normal, radius);
-		supportOut.surfaceNormal.set(normal);
-		supportOut.intersectionDistance=Double.NaN;
+	public double getSupport(Vector3 normal) {
+		return normal.dotProduct(centre)+radius;
 	}
 	
 	@Override

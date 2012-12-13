@@ -9,7 +9,7 @@ public abstract class AInfinitePrimitive extends APrimitive {
 	}
 
 	@Override
-	public void getSupport(Vector3 normal, IntersectionInfo resultOut) {
+	public double getSupport(Vector3 normal) {
 		throw new UnsupportedOperationException("Support vector calculation not possible on infinite primitives!!!");
 	}
 }

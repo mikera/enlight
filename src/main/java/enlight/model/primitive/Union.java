@@ -34,7 +34,7 @@ public final class Union extends ASceneObject {
 	}
 
 	@Override
-	public void getSupport(Vector3 normal, IntersectionInfo resultOut) {
+	public double getSupport(Vector3 normal) {
 		if (!isFinite()) throw new EnlightError("Can't get support of union of infinite objects!");
 		throw new UnsupportedOperationException("Not yet implemented!");
 	}
