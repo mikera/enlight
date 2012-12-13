@@ -1,6 +1,7 @@
 (ns enlight.core
   (:require [mikera.vectorz.core :as v])
   (:require [enlight.colours :as c])
+  (:require [clisk.core :as clisk])
   (:refer-clojure :exclude [compile])
   (:import [mikera.vectorz Vector3 Vector4 AVector Vectorz])
   (:import [enlight.model ASceneObject IntersectionInfo])
@@ -35,6 +36,14 @@
   (^ASceneObject [centre radius]
     (Sphere. (v/vec centre) 1.0)))
 
+(defn with 
+  "Modifies a scene object with a map of new/updated property values. Properties not valid for the given object are ignored"
+  ([^ASceneObject object props]
+    (.with object props)))
+
+(defmacro function
+  [node]
+  `(clisk/vector-function ~node :input-dimensions 3))
 
 ;; ===========================================================
 ;; scene compilation

@@ -1,5 +1,6 @@
 (ns enlight.samples.demo
   (:require [mikera.vectorz.core :as v])
+  (:require [clisk core patterns functions])
   (:use clojure.reflect)
   (:use [enlight core]))
 
@@ -11,7 +12,7 @@
             :direction [0 0 1]
             :up [0 1 0]
             :right [1 0 0]}
-   :root (sphere)
+   :root (with (sphere) {:colour (function (clisk.functions/take-components 3 (clisk.patterns/vsnoise)))})
   ])
 
 
