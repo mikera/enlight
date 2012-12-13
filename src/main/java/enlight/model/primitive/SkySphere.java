@@ -1,7 +1,6 @@
 package enlight.model.primitive;
 
 import mikera.vectorz.geom.Ray;
-import enlight.model.AInfinitePrimitive;
 import enlight.model.IntersectionInfo;
 
 public class SkySphere extends AInfinitePrimitive {

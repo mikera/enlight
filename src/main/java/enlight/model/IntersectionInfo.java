@@ -1,5 +1,6 @@
 package enlight.model;
 
+import enlight.model.primitive.APrimitive;
 import mikera.vectorz.Vector3;
 
 /**

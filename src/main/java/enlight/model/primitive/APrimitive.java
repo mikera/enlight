@@ -1,9 +1,11 @@
-package enlight.model;
+package enlight.model.primitive;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import enlight.Key;
+import enlight.model.ASceneObject;
+import enlight.model.IntersectionInfo;
 import enlight.model.Utils;
 import mikera.transformz.ATransform;
 import mikera.vectorz.Vector3;

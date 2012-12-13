@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import enlight.Key;
-import enlight.model.AFinitePrimitive;
 import enlight.model.IntersectionInfo;
 import mikera.vectorz.Vector3;
 import mikera.vectorz.geom.BoundBox;

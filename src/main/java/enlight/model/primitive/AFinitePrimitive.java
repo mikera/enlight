@@ -1,7 +1,9 @@
-package enlight.model;
+package enlight.model.primitive;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import enlight.model.Utils;
 
 import mikera.vectorz.geom.BoundBox;
 
