@@ -55,14 +55,14 @@ public class Sphere extends AFinitePrimitive {
 		double disc=(centreDist*centreDist)-c.magnitudeSquared()+(radius*radius);
 		
 		// bailout if line misses completely
-		if (disc<0) return false;
+		if (disc<=0.0) return false;
 		
 		double rootDisc=Math.sqrt(disc);
+		// bailout if not far enough
+		if (ray.end<=(centreDist-rootDisc)) return false;
+		
 		// bailout if start of line is past sphere
-		if (ray.start>=(centreDist+rootDisc)) {
-			result.intersectionObject=null;
-			return false;			
-		}
+		if (ray.start>=(centreDist+rootDisc)) return false;
 		
 		// we definitely have a collision, ensure we have right distance
 		double collDist = centreDist-rootDisc;
@@ -83,6 +83,7 @@ public class Sphere extends AFinitePrimitive {
 		if (result.interior) result.surfaceNormal.multiply(-1.0);
 		result.intersectionPoint.add(ray.origin);
 		result.intersectionDistance=collDist;
+		ray.end=collDist;
 		return true;
 	}
 

@@ -43,8 +43,11 @@ public final class Union extends ASceneObject {
 
 	@Override
 	public boolean getIntersection(Ray ray, IntersectionInfo result) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean found=false;
+		for (ASceneObject o:objects) {
+			if (o.getIntersection(ray, result)) found=true;
+		}
+		return found;
 	}
 
 	@Override
