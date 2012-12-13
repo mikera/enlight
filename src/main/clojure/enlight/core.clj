@@ -3,8 +3,8 @@
   (:require [enlight.colours :as c])
   (:refer-clojure :exclude [compile])
   (:import [mikera.vectorz Vector3 Vector4 AVector Vectorz])
-  (:import [enlight.geom ASceneObject IntersectionInfo])
-  (:import [enlight.geom.primitive Sphere SkySphere])
+  (:import [enlight.model ASceneObject IntersectionInfo])
+  (:import [enlight.model.primitive Sphere SkySphere])
   (:import [java.awt.image BufferedImage])
   (:import [mikera.image]))
 

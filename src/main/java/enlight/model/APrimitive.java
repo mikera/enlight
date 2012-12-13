@@ -1,10 +1,10 @@
-package enlight.geom;
+package enlight.model;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import enlight.Key;
-import enlight.geom.Utils;
+import enlight.model.Utils;
 import mikera.transformz.ATransform;
 import mikera.vectorz.Vector3;
 

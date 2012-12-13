@@ -1,11 +1,11 @@
-package enlight.geom.primitive;
+package enlight.model.primitive;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import enlight.Key;
-import enlight.geom.AFinitePrimitive;
-import enlight.geom.IntersectionInfo;
+import enlight.model.AFinitePrimitive;
+import enlight.model.IntersectionInfo;
 import mikera.vectorz.Vector3;
 
 public class Sphere extends AFinitePrimitive {

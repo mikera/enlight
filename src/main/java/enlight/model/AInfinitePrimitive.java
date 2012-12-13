@@ -1,4 +1,4 @@
-package enlight.geom;
+package enlight.model;
 
 import mikera.vectorz.Vector3;
 

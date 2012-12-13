@@ -1,4 +1,4 @@
-package enlight.geom;
+package enlight.model;
 
 import java.util.HashMap;
 import java.util.Map;

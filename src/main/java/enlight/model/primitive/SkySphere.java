@@ -1,8 +1,8 @@
-package enlight.geom.primitive;
+package enlight.model.primitive;
 
 import mikera.vectorz.Vector3;
-import enlight.geom.AInfinitePrimitive;
-import enlight.geom.IntersectionInfo;
+import enlight.model.AInfinitePrimitive;
+import enlight.model.IntersectionInfo;
 
 public class SkySphere extends AInfinitePrimitive {
 

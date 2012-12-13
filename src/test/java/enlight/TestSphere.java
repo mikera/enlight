@@ -8,8 +8,8 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import enlight.geom.IntersectionInfo;
-import enlight.geom.primitive.Sphere;
+import enlight.model.IntersectionInfo;
+import enlight.model.primitive.Sphere;
 import mikera.vectorz.Vector3;
 
 public class TestSphere {

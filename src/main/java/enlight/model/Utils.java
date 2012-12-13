@@ -1,4 +1,4 @@
-package enlight.geom;
+package enlight.model;
 
 import mikera.transformz.ATransform;
 import mikera.transformz.Transformz;

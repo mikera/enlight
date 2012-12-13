@@ -1,16 +1,13 @@
-package enlight.geom.primitive;
+package enlight.model.primitive;
 
 import java.util.Collection;
 
 import mikera.vectorz.Vector3;
 import enlight.EnlightError;
-import enlight.geom.APrimitive;
-import enlight.geom.ASceneObject;
-import enlight.geom.IntersectionInfo;
+import enlight.model.ASceneObject;
+import enlight.model.IntersectionInfo;
 
-import enlight.geom.APrimitive;
-
-public final class Union extends APrimitive {
+public final class Union extends ASceneObject {
 
 	private final boolean finite;
 	private final int count;
