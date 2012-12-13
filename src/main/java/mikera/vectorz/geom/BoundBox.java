@@ -73,9 +73,12 @@ public class BoundBox implements Cloneable {
 	}
 
 	public void include(double x, double y, double z) {
-		if (x<lower.x) {lower.x=x;} else if (x>upper.x) {upper.x=x;}
-		if (y<lower.y) {lower.y=y;} else if (y>upper.y) {upper.y=y;}
-		if (z<lower.z) {lower.z=z;} else if (z>upper.z) {upper.z=z;}
+		if (x<lower.x) {lower.x=x;} 
+		if (y<lower.y) {lower.y=y;} 
+		if (z<lower.z) {lower.z=z;} 
+		if (x>upper.x) {upper.x=x;}
+		if (y>upper.y) {upper.y=y;}
+		if (z>upper.z) {upper.z=z;}
 	}
 	
 	public void include(BoundBox bb) {
