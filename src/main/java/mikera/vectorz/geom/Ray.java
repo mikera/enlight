@@ -11,7 +11,7 @@ public class Ray {
 	public final Vector3 origin;
 	public final Vector3 direction;
 	
-	public double start=0;
+	public double start=0.0;
 	public double end=Double.POSITIVE_INFINITY;
 	
 	public Ray(Vector3 origin, Vector3 direction) {

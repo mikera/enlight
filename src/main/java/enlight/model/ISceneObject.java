@@ -9,7 +9,12 @@ import mikera.vectorz.geom.BoundBox;
 public interface ISceneObject {
 	public double getSupport (Vector3 normal);
 	
-	public void getIntersection(Vector3 start, Vector3 direction, double startDist, IntersectionInfo result);
+	/**
+	 * Gets the intersection of the scene object with a ray
+	 * Returns true if an intersection was found, in which case IntersectionInfo should be populated.
+	 * @param result Out parameter for populated intersection info if intersection was found, unchanged otherwise
+	 */
+	public boolean getIntersection(Vector3 start, Vector3 direction, double startDist, IntersectionInfo result);
 
 	public void includeInBoundBox(BoundBox b);
 	

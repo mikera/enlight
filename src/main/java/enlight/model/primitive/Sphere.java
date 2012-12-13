@@ -43,7 +43,7 @@ public class Sphere extends AFinitePrimitive {
 	}
 	
 	@Override
-	public void getIntersection(Vector3 start, Vector3 direction, double startDist,
+	public boolean getIntersection(Vector3 start, Vector3 direction, double startDist,
 			IntersectionInfo result) {
 		// c is centre of sphere translated so line starts at 0,0
 		Vector3 c=new Vector3(centre);
@@ -57,14 +57,14 @@ public class Sphere extends AFinitePrimitive {
 		// bailout if line misses completely
 		if (disc<0) {
 			result.intersectionObject=null;
-			return;
+			return false;
 		}
 		
 		double rootDisc=Math.sqrt(disc);
 		// bailout if start of line is past sphere
 		if (startDist>=(centreDist+rootDisc)) {
 			result.intersectionObject=null;
-			return;			
+			return false;			
 		}
 		
 		// we definitely have a collision, ensure we have right distance
@@ -86,6 +86,7 @@ public class Sphere extends AFinitePrimitive {
 		if (result.interior) result.surfaceNormal.multiply(-1.0);
 		result.intersectionPoint.add(start);
 		result.intersectionDistance=collDist;
+		return true;
 	}
 
 	@Override

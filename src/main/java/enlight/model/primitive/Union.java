@@ -41,10 +41,10 @@ public final class Union extends ASceneObject {
 	}
 
 	@Override
-	public void getIntersection(Vector3 start, Vector3 direction,
+	public boolean getIntersection(Vector3 start, Vector3 direction,
 			double startDist, IntersectionInfo result) {
 		// TODO Auto-generated method stub
-		
+		return false;
 	}
 
 	@Override

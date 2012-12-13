@@ -40,5 +40,5 @@ public abstract class APrimitive extends ASceneObject {
 
 	public abstract double getSupport(Vector3 normal);
 	
-	public abstract void getIntersection(Vector3 start, Vector3 direction, double startDist, IntersectionInfo result);
+	public abstract boolean getIntersection(Vector3 start, Vector3 direction, double startDist, IntersectionInfo result);
 }
