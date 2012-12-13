@@ -3,7 +3,7 @@ package enlight.model.primitive;
 import mikera.vectorz.geom.Ray;
 import enlight.model.IntersectionInfo;
 
-public class SkySphere extends AInfinitePrimitive {
+public final class SkySphere extends AInfinitePrimitive {
 
 	@Override
 	public boolean getIntersection(Ray ray,
@@ -19,8 +19,4 @@ public class SkySphere extends AInfinitePrimitive {
 		result.surfaceNormal.negate();
 		return true;
 	}
-
-
-
-
 }

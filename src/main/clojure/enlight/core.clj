@@ -4,6 +4,7 @@
   (:require [clisk.core :as clisk])
   (:refer-clojure :exclude [compile])
   (:import [mikera.vectorz Vector3 Vector4 AVector Vectorz])
+  (:import [mikera.transformz ATransform])
   (:import [enlight.model ASceneObject IntersectionInfo])
   (:import [mikera.vectorz.geom Ray BoundBox])
   (:import [enlight.model.primitive Sphere SkySphere Union])
@@ -16,6 +17,8 @@
 (def ^:dynamic *show-warnings* false)
 
 (declare compile-object)
+(declare compile-function)
+(declare with)
 
 (defmacro error
   "Throws an error with the provided message(s)"
@@ -29,14 +32,25 @@
        (binding [*out* *err*]
          (println (str "WARNING: " ~@vals))))))
 
+
+(defmacro function
+  "Produces a VectorFunction for a given clisk node" 
+  ([node]
+    `(clisk/vector-function ~node :input-dimensions 3)))
+
 ;; ===========================================================
 ;; primitive constructors
 
 (defn sphere 
-  (^ASceneObject []
+  "Creates a sphere"
+ (^ASceneObject []
     (sphere (v/vec3) 1.0))
   (^ASceneObject [centre radius]
     (Sphere. (v/vec centre) 1.0)))
+
+(defn sky-sphere 
+  (^ASceneObject [texture]
+    (with (SkySphere.) {:colour (compile-function texture)})))
 
 (defn with 
   "Modifies a scene object with a map of new/updated property values. Properties not valid for the given object are ignored"
@@ -44,20 +58,27 @@
     (.with object props)))
 
 (defn union
+  "Creates a union of multiple objects"
   (^ASceneObject [objects]
     (Union/of ^java.util.List (vec objects))))
 
-(defmacro function
-  [node]
-  `(clisk/vector-function ~node :input-dimensions 3))
 
 ;; ===========================================================
 ;; scene compilation
 
+(defn compile-function 
+  "Compiles a clisk vector function"
+  ([obj]
+    (if (instance? ATransform obj) 
+      obj
+      (error "not implemented!"))))
+
 (defn compile-object 
   "Compiles a scene object"
   ([obj]
-    obj))
+    (if (instance? ASceneObject obj) 
+      obj
+      (error "not implemented!"))))
 
 (defn compile-camera
   "Compiles a camera to ensure necessary vectors are present"
@@ -205,8 +226,3 @@
        :or {width 256 height 256}
        :as params}]
     (display (apply render scene (apply concat params)) :title title)))
-
-(defn testfunction [] 
-  (show {})
-  (compile-scene {})
-)
