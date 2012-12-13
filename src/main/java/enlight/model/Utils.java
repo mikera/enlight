@@ -19,6 +19,7 @@ public class Utils {
 	public static final ATransform DEFAULT_RGB_FUNCTION=Transformz.constantTransform(3, Vector3.of(1,1,1));
 
 	public static void includeSupportBounds(ASceneObject o, BoundBox b) {
+		assert(o.isFinite());
 		b.includeX(o.getSupport(X_POSITIVE));
 		b.includeX(-o.getSupport(X_NEGATIVE));
 		b.includeY(o.getSupport(Y_POSITIVE));
