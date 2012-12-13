@@ -13,6 +13,13 @@ public class BoundBox {
 	public final Vector3 lower;
 	public final Vector3 upper;
 	
+	
+	
+	public BoundBox(Vector3 a, double margin) {
+		lower=new Vector3(a.x-margin,a.y-margin,a.z-margin);
+		upper=new Vector3(a.x+margin,a.y+margin,a.z+margin);
+	}
+	
 	public BoundBox(AVector a) {
 		if (a instanceof Vector3) {
 			Vector3 v=(Vector3)a;
