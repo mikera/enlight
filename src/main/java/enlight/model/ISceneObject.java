@@ -5,6 +5,7 @@ import java.util.Map;
 
 import mikera.vectorz.Vector3;
 import mikera.vectorz.geom.BoundBox;
+import mikera.vectorz.geom.Ray;
 
 public interface ISceneObject {
 	public double getSupport (Vector3 normal);
@@ -14,7 +15,7 @@ public interface ISceneObject {
 	 * Returns true if an intersection was found, in which case IntersectionInfo should be populated.
 	 * @param result Out parameter for populated intersection info if intersection was found, unchanged otherwise
 	 */
-	public boolean getIntersection(Vector3 start, Vector3 direction, double startDist, IntersectionInfo result);
+	public boolean getIntersection(Ray ray, IntersectionInfo result);
 
 	public void includeInBoundBox(BoundBox b);
 	

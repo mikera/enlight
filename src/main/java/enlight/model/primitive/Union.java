@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import mikera.vectorz.Vector3;
 import mikera.vectorz.geom.BoundBox;
+import mikera.vectorz.geom.Ray;
 import enlight.EnlightError;
 import enlight.model.ASceneObject;
 import enlight.model.IntersectionInfo;
@@ -41,8 +42,7 @@ public final class Union extends ASceneObject {
 	}
 
 	@Override
-	public boolean getIntersection(Vector3 start, Vector3 direction,
-			double startDist, IntersectionInfo result) {
+	public boolean getIntersection(Ray ray, IntersectionInfo result) {
 		// TODO Auto-generated method stub
 		return false;
 	}

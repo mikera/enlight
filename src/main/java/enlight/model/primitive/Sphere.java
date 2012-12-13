@@ -8,6 +8,7 @@ import enlight.model.AFinitePrimitive;
 import enlight.model.IntersectionInfo;
 import mikera.vectorz.Vector3;
 import mikera.vectorz.geom.BoundBox;
+import mikera.vectorz.geom.Ray;
 
 public class Sphere extends AFinitePrimitive {
 	private final Vector3 centre;
@@ -43,48 +44,44 @@ public class Sphere extends AFinitePrimitive {
 	}
 	
 	@Override
-	public boolean getIntersection(Vector3 start, Vector3 direction, double startDist,
-			IntersectionInfo result) {
+	public boolean getIntersection(Ray ray,	IntersectionInfo result) {
 		// c is centre of sphere translated so line starts at 0,0
 		Vector3 c=new Vector3(centre);
-		c.sub(start);
+		c.sub(ray.origin);
 		
-		double centreDist = direction.dotProduct(c);
+		double centreDist = ray.direction.dotProduct(c);
 
 		// discriminant of quadratic
 		double disc=(centreDist*centreDist)-c.magnitudeSquared()+(radius*radius);
 		
 		// bailout if line misses completely
-		if (disc<0) {
-			result.intersectionObject=null;
-			return false;
-		}
+		if (disc<0) return false;
 		
 		double rootDisc=Math.sqrt(disc);
 		// bailout if start of line is past sphere
-		if (startDist>=(centreDist+rootDisc)) {
+		if (ray.start>=(centreDist+rootDisc)) {
 			result.intersectionObject=null;
 			return false;			
 		}
 		
 		// we definitely have a collision, ensure we have right distance
 		double collDist = centreDist-rootDisc;
-		if (startDist>=collDist) {
+		if (ray.start>=collDist) {
 			result.interior=true;
 			collDist=centreDist+rootDisc;
 		} else {
 			result.interior=false;
 		}
-		assert (startDist<=collDist);
+		assert (ray.start<=collDist);
 		
 		result.intersectionObject=this;
-		result.intersectionPoint.set(direction);
+		result.intersectionPoint.set(ray.direction);
 		result.intersectionPoint.multiply(collDist);
 		result.surfaceNormal.set(result.intersectionPoint);
 		result.surfaceNormal.sub(c);
 		result.surfaceNormal.normalise();
 		if (result.interior) result.surfaceNormal.multiply(-1.0);
-		result.intersectionPoint.add(start);
+		result.intersectionPoint.add(ray.origin);
 		result.intersectionDistance=collDist;
 		return true;
 	}

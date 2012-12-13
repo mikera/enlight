@@ -4,6 +4,7 @@
   (:refer-clojure :exclude [compile])
   (:import [mikera.vectorz Vector3 Vector4 AVector Vectorz])
   (:import [enlight.model ASceneObject IntersectionInfo])
+  (:import [mikera.vectorz.geom Ray BoundBox])
   (:import [enlight.model.primitive Sphere SkySphere])
   (:import [java.awt.image BufferedImage])
   (:import [mikera.image]))
@@ -120,21 +121,26 @@
   (^Vector3 [camera]
     (:right camera)))
 
+(defn ray 
+  "Creates a new ray with specified origin and direction. Direction must be normalised, or bad things will happen."
+  (^Ray [^Vector3 origin ^Vector3 direction]
+    (Ray. origin direction)))
+
 ;; ======================================================
 ;; Raytracer core 
 
 (defn trace-ray
-  ([^ASceneObject scene-object ^Vector3 pos ^Vector3 dir ^Vector4 colour-result]
+  ([^ASceneObject scene-object ^Ray ray ^Vector4 colour-result]
     (let [result (IntersectionInfo.)]
-      (trace-ray scene-object pos dir colour-result result)))
-  ([^ASceneObject scene-object ^Vector3 pos ^Vector3 dir ^Vector4 colour-result ^IntersectionInfo result]
-    (.getIntersection scene-object pos dir 0.0 result)
-    (if (.hasIntersection result)
+      (trace-ray scene-object ray colour-result result)))
+  ([^ASceneObject scene-object ^Ray ray ^Vector4 colour-result ^IntersectionInfo result]
+    (if (.getIntersection scene-object ray result)
       (let [hit-object (.intersectionObject result)
-            temp (v/vec3)] ;; allocation! kill!
+            temp (v/vec3) ;; allocation! kill!
+            pos (.intersectionPoint result)] 
         (.getAmbientColour hit-object pos temp)
         (.copyTo temp colour-result 0))
-      (.copyTo dir colour-result 0))))
+      (.copyTo (.direction ray) colour-result 0))))
 
 
 (defn new-image
@@ -167,7 +173,7 @@
           (v/add-multiple! dir camera-right xp)
           (v/add-multiple! dir camera-up (- yp))
           (v/normalise! dir)
-          (trace-ray (:root graph) camera-pos dir colour-result)
+          (trace-ray (:root graph) (ray camera-pos dir) colour-result)
           (.setRGB im ix iy (c/argb-from-vector4 colour-result)))))
     im)))
 

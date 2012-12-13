@@ -7,6 +7,7 @@ import enlight.Key;
 import enlight.model.Utils;
 import mikera.transformz.ATransform;
 import mikera.vectorz.Vector3;
+import mikera.vectorz.geom.Ray;
 
 /**
  * Abstract base class for primitives (anything that can be hit by rays)
@@ -40,5 +41,5 @@ public abstract class APrimitive extends ASceneObject {
 
 	public abstract double getSupport(Vector3 normal);
 	
-	public abstract boolean getIntersection(Vector3 start, Vector3 direction, double startDist, IntersectionInfo result);
+	public abstract boolean getIntersection(Ray ray, IntersectionInfo result);
 }
