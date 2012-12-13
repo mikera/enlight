@@ -32,6 +32,31 @@ public final class BoundBox implements Cloneable {
 	}
 	
 	/**
+	 * Includes a set of bounds. Assumes already ordered into upper and lower.
+	 * Extends the BoundBox as required.
+	 */
+	private void include(double lx, double ly, double lz, double ux, double uy, double uz) {
+		if (lx<lower.x) {lower.x=lx;} 
+		if (ly<lower.y) {lower.y=ly;} 
+		if (lz<lower.z) {lower.z=lz;} 
+		if (ux>upper.x) {upper.x=ux;}
+		if (uy>upper.y) {upper.y=uy;}
+		if (uz>upper.z) {upper.z=uz;}		
+	}
+	
+	/**
+	 * Includes a single point specified by x,y,z. Extends the boundbox as required.
+	 */
+	public void include(double x, double y, double z) {
+		if (x<lower.x) {lower.x=x;} 
+		if (y<lower.y) {lower.y=y;} 
+		if (z<lower.z) {lower.z=z;} 
+		if (x>upper.x) {upper.x=x;}
+		if (y>upper.y) {upper.y=y;}
+		if (z>upper.z) {upper.z=z;}
+	}
+	
+	/**
 	 * Construct a BoundBox with a margin around an existing BoundBox
 	 */
 	public BoundBox(BoundBox bb, double margin) {
@@ -84,18 +109,18 @@ public final class BoundBox implements Cloneable {
 		include(a.x,a.y,a.z);
 	}
 
-	public void include(double x, double y, double z) {
-		if (x<lower.x) {lower.x=x;} 
-		if (y<lower.y) {lower.y=y;} 
-		if (z<lower.z) {lower.z=z;} 
-		if (x>upper.x) {upper.x=x;}
-		if (y>upper.y) {upper.y=y;}
-		if (z>upper.z) {upper.z=z;}
+
+	
+	/**
+	 * Includes the bounds between two vectors.
+	 * Assumes upper and lower are already correctly ordered.
+	 */
+	public void include(Vector3 lower, Vector3 upper) {
+		include(lower.x, lower.y,lower.z, upper.x, upper.y,upper.z);
 	}
 	
 	public void include(BoundBox bb) {
-		include(bb.upper);
-		include(bb.lower);
+		include(bb.upper,bb.lower);
 	}
 	
 	public void setToPoint(Vector3 a) {
@@ -135,4 +160,18 @@ public final class BoundBox implements Cloneable {
 	public int hashCode() {
 		return (31*lower.hashCode())+upper.hashCode();
 	}
+
+	/**
+	 * Adds everything to the BoundBox
+	 */
+	public void includeEverything() {
+		lower.fill(Double.NEGATIVE_INFINITY);
+		upper.fill(Double.POSITIVE_INFINITY);
+	}
+
+	public void include(Vector3 point, double margin) {
+		include(point.x-margin,point.y-margin,point.z-margin,point.x+margin,point.y+margin,point.z+margin);
+	}
+
+
 }

@@ -1,6 +1,7 @@
 package enlight.model.primitive;
 
 import mikera.vectorz.Vector3;
+import mikera.vectorz.geom.BoundBox;
 import enlight.model.AInfinitePrimitive;
 import enlight.model.IntersectionInfo;
 
@@ -18,5 +19,8 @@ public class SkySphere extends AInfinitePrimitive {
 		result.surfaceNormal.negate();
 		
 	}
+
+
+
 
 }

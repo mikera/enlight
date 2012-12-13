@@ -3,6 +3,7 @@ package enlight.model.primitive;
 import java.util.Collection;
 
 import mikera.vectorz.Vector3;
+import mikera.vectorz.geom.BoundBox;
 import enlight.EnlightError;
 import enlight.model.ASceneObject;
 import enlight.model.IntersectionInfo;
@@ -44,6 +45,13 @@ public final class Union extends ASceneObject {
 			double startDist, IntersectionInfo result) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void includeInBoundBox(BoundBox b) {
+		for (ASceneObject o:objects) {
+			o.includeInBoundBox(b);
+		}
 	}
 
 }

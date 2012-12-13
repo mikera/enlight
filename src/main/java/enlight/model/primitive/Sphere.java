@@ -7,6 +7,7 @@ import enlight.Key;
 import enlight.model.AFinitePrimitive;
 import enlight.model.IntersectionInfo;
 import mikera.vectorz.Vector3;
+import mikera.vectorz.geom.BoundBox;
 
 public class Sphere extends AFinitePrimitive {
 	private final Vector3 centre;
@@ -85,5 +86,10 @@ public class Sphere extends AFinitePrimitive {
 		if (result.interior) result.surfaceNormal.multiply(-1.0);
 		result.intersectionPoint.add(start);
 		result.intersectionDistance=collDist;
+	}
+
+	@Override
+	public void includeInBoundBox(BoundBox b) {
+		b.include(centre,radius);
 	}	
 }

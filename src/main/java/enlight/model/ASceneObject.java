@@ -3,6 +3,8 @@ package enlight.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import mikera.vectorz.geom.BoundBox;
+
 import enlight.EnlightError;
 
 /**
@@ -32,6 +34,13 @@ public abstract class ASceneObject implements ISceneObject {
 		} catch (CloneNotSupportedException e) {
 			throw new EnlightError(e);
 		}
+	}
+	
+	@Override
+	public BoundBox getBoundBox() {
+		BoundBox b=new BoundBox();
+		includeInBoundBox(b);
+		return b;
 	}
 	
 	public String toString() {
