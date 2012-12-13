@@ -9,7 +9,7 @@ import enlight.EnlightError;
 import enlight.model.ASceneObject;
 import enlight.model.IntersectionInfo;
 
-public final class Union extends ASceneObject {
+public final class Union extends ACompositeObject {
 
 	private final boolean finite;
 	private final int count;
