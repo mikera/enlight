@@ -197,5 +197,8 @@ public final class BoundBox implements Cloneable {
 		include(point.x-margin,point.y-margin,point.z-margin,point.x+margin,point.y+margin,point.z+margin);
 	}
 
-
+	@Override
+	public String toString() {
+		return "BoundBox[lower = "+lower.toString()+" , upper = " +upper.toString()+ "]";
+	}
 }
