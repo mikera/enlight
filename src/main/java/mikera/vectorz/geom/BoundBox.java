@@ -9,11 +9,24 @@ import mikera.vectorz.Vector3;
  * @author Mike
  *
  */
-public class BoundBox {
+public class BoundBox implements Cloneable {
 	public final Vector3 lower;
 	public final Vector3 upper;
 	
+	/**
+	 * Construct a BoundBox as an exact deep copy of another BoundBox
+	 */
+	public BoundBox(BoundBox bb) {
+		lower=bb.lower.clone();
+		upper=bb.upper.clone();
+	}
 	
+	public BoundBox(BoundBox bb, double margin) {
+		Vector3 a=bb.lower;
+		lower=new Vector3(a.x-margin,a.y-margin,a.z-margin);
+		Vector3 b=bb.upper;
+		upper=new Vector3(b.x+margin,b.y+margin,b.z+margin);
+	}
 	
 	public BoundBox(Vector3 a, double margin) {
 		lower=new Vector3(a.x-margin,a.y-margin,a.z-margin);
@@ -55,5 +68,9 @@ public class BoundBox {
 		if (x<lower.x) {lower.x=x;} else if (x>upper.x) {upper.x=x;}
 		if (y<lower.y) {lower.y=y;} else if (y>upper.y) {upper.y=y;}
 		if (z<lower.z) {lower.z=z;} else if (z>upper.z) {upper.z=z;}
+	}
+	
+	public BoundBox clone() {
+		return new BoundBox(this);
 	}
 }
