@@ -3,13 +3,15 @@ package mikera.vectorz.geom;
 import mikera.vectorz.AVector;
 import mikera.vectorz.Vector3;
 
+// TODO: migrate to vectorz main library once complete
+
 /**
  * 3D Bounding box constructed from two Vector3 components
  * 
  * @author Mike
  *
  */
-public class BoundBox implements Cloneable {
+public final class BoundBox implements Cloneable {
 	public final Vector3 lower;
 	public final Vector3 upper;
 	
@@ -29,6 +31,9 @@ public class BoundBox implements Cloneable {
 		upper=new Vector3 (Double.NEGATIVE_INFINITY,Double.NEGATIVE_INFINITY,Double.NEGATIVE_INFINITY);
 	}
 	
+	/**
+	 * Construct a BoundBox with a margin around an existing BoundBox
+	 */
 	public BoundBox(BoundBox bb, double margin) {
 		Vector3 a=bb.lower;
 		lower=new Vector3(a.x-margin,a.y-margin,a.z-margin);
@@ -36,11 +41,18 @@ public class BoundBox implements Cloneable {
 		upper=new Vector3(b.x+margin,b.y+margin,b.z+margin);
 	}
 	
+	/**
+	 * Creates a boundbox with a margin around a single point.
+	 * Sufficient to bound a 
+	 */
 	public BoundBox(Vector3 a, double margin) {
 		lower=new Vector3(a.x-margin,a.y-margin,a.z-margin);
 		upper=new Vector3(a.x+margin,a.y+margin,a.z+margin);
 	}
 	
+	/**
+	 * Create a BoundBox including a Single point
+	 */
 	public BoundBox(AVector a) {
 		if (a instanceof Vector3) {
 			Vector3 v=(Vector3)a;
@@ -95,9 +107,32 @@ public class BoundBox implements Cloneable {
 	public BoundBox clone() {
 		return new BoundBox(this);
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof BoundBox) return equals((BoundBox) o);
+		return false;
+	}
+	
+	public boolean equals(BoundBox b) {
+		return lower.equals(b.lower)&&upper.equals(b.upper);
+	}
 
-	public boolean contains(int x, int y, int z) {
+	public boolean contains(double x, double y, double z) {
 		return	(x>=lower.x)&&(y>=lower.y)&&(z>=lower.z)
 				&&(x<=upper.x)&&(y<=upper.y)&&(z<=upper.z);
+	}
+	
+	public boolean contains(BoundBox bb) {
+		return	contains(bb.lower)&&contains(bb.upper);
+	}
+
+	private boolean contains(Vector3 a) {
+		return contains(a.x,a.y,a.z);
+	}
+
+	@Override
+	public int hashCode() {
+		return (31*lower.hashCode())+upper.hashCode();
 	}
 }
