@@ -57,6 +57,30 @@ public final class BoundBox implements Cloneable {
 	}
 	
 	/**
+	 * Ensures a specific x value is included. Does not affect other bounds.
+	 */
+	public void includeX(double x) {
+		if (x<lower.x) {lower.x=x;} 
+		if (x>upper.x) {upper.x=x;}
+	}
+	
+	/**
+	 * Ensures a specific y value is included. Does not affect other bounds.
+	 */
+	public void includeY(double y) {
+		if (y<lower.y) {lower.y=y;} 
+		if (y>upper.y) {upper.y=y;}
+	}
+	
+	/**
+	 * Ensures a specific z value is included. Does not affect other bounds.
+	 */
+	public void includeZ(double z) {
+		if (z<lower.z) {lower.z=z;} 
+		if (z>upper.z) {upper.z=z;}
+	}
+	
+	/**
 	 * Construct a BoundBox with a margin around an existing BoundBox
 	 */
 	public BoundBox(BoundBox bb, double margin) {
