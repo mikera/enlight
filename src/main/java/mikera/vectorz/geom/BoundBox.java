@@ -21,6 +21,14 @@ public class BoundBox implements Cloneable {
 		upper=bb.upper.clone();
 	}
 	
+	/**
+	 * Creates an empty BoundBox
+	 */
+	public BoundBox() {
+		lower=new Vector3 (Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY);
+		upper=new Vector3 (Double.NEGATIVE_INFINITY,Double.NEGATIVE_INFINITY,Double.NEGATIVE_INFINITY);
+	}
+	
 	public BoundBox(BoundBox bb, double margin) {
 		Vector3 a=bb.lower;
 		lower=new Vector3(a.x-margin,a.y-margin,a.z-margin);
@@ -64,10 +72,21 @@ public class BoundBox implements Cloneable {
 		include(a.x,a.y,a.z);
 	}
 
-	private void include(double x, double y, double z) {
+	public void include(double x, double y, double z) {
 		if (x<lower.x) {lower.x=x;} else if (x>upper.x) {upper.x=x;}
 		if (y<lower.y) {lower.y=y;} else if (y>upper.y) {upper.y=y;}
 		if (z<lower.z) {lower.z=z;} else if (z>upper.z) {upper.z=z;}
+	}
+	
+	public void include(BoundBox bb) {
+		include(bb.upper);
+		include(bb.lower);
+	}
+	
+	public void setToPoint(Vector3 a) {
+		lower.x=upper.x=a.x;
+		lower.y=upper.y=a.y;
+		lower.z=upper.z=a.z;
 	}
 	
 	public BoundBox clone() {
