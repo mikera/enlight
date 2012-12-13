@@ -11,6 +11,7 @@ public class SkySphere extends AInfinitePrimitive {
 			IntersectionInfo result) {
 		if (ray.end<Double.POSITIVE_INFINITY) return false;
 		
+		ray.end=Double.POSITIVE_INFINITY;
 		result.intersectionDistance=Double.POSITIVE_INFINITY;	
 		result.intersectionObject=this;
 		
