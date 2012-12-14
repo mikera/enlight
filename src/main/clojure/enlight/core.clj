@@ -61,8 +61,8 @@
 
 (defn union
   "Creates a union of multiple objects"
-  (^ASceneObject [objects]
-    (Union/of ^java.util.List (vec objects))))
+  (^ASceneObject [& objects]
+    (Union/of ^java.util.List (vec (map compile-object objects)))))
 
 
 ;; ===========================================================
@@ -75,12 +75,23 @@
       obj
       (error "not implemented!"))))
 
+(def object-type-functions
+  {:union union})
+
+(defn compile-object-vector
+  "Compiles an object vector to produce a scene object"
+  ([[type & stuff]]
+    (if-let [fun (object-type-functions type)]
+      (apply fun stuff)
+      (error "can't find object type function for " type))))
+
 (defn compile-object 
   "Compiles a scene object"
   ([obj]
-    (if (instance? ASceneObject obj) 
-      obj
-      (error "not implemented!"))))
+    (cond 
+      (instance? ASceneObject obj) obj
+      (clojure.core/vector? obj) (compile-object-vector obj)
+      :default (error "not implemented!"))))
 
 (defn compile-camera
   "Compiles a camera to ensure necessary vectors are present"
