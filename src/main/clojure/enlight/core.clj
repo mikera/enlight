@@ -1,5 +1,6 @@
 (ns enlight.core
   (:require [mikera.vectorz.core :as v])
+  (:require [mikera.vectorz.matrix :as m])
   (:require [enlight.colours :as c])
   (:require [clisk.core :as clisk])
   (:refer-clojure :exclude [compile])
@@ -70,13 +71,16 @@
 
 (defn compile-function 
   "Compiles a clisk vector function"
-  ([obj]
-    (if (instance? ATransform obj) 
-      obj
-      (error "not implemented!"))))
+  ([obj & more-args]
+    (cond 
+      (instance? ATransform obj) obj  ;; function already compiled, nice and easy
+      (v/vec? obj) (m/constant-transform obj)
+      (sequable? obj) (clisk/vector-function obj :dimensions (or 3 3)) ;; compile a clisk function? 
+      :default (error "not implemented!"))))
 
 (def object-type-functions
-  {:union union})
+  {:union union
+   :function compile-function})
 
 (defn compile-object-vector
   "Compiles an object vector to produce a scene object"
