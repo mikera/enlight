@@ -174,9 +174,11 @@
       (let [hit-object (.intersectionObject result)
             temp (v/vec3) ;; allocation! kill!
             pos (.intersectionPoint result)] 
-        (.getAmbientColour hit-object pos temp)
-        (.copyTo temp colour-result 0))
-      (.copyTo (.direction ray) colour-result 0))))
+        (.getPigment hit-object pos temp)
+        (.copyTo temp colour-result 0)
+        (.set colour-result 3 1.0)  ;; clear transparency
+      )
+      (.copyTo c/BLACK colour-result 0))))
 
 
 (defn new-image

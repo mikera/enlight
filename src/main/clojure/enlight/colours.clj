@@ -1,7 +1,16 @@
 (ns enlight.colours
-  (import [mikera.vectorz Vector3 Vector4 AVector Vectorz]))
+  (:require [mikera.vectorz.core :as v])
+  (:import [mikera.vectorz Vector3 Vector4 AVector Vectorz]))
 
 ;; utility functions for treating vectors as colours
+
+(def ^Vector4 TRANSPARENT (v/vec4 [0 0 0 0]))
+
+(def ^Vector4 BLACK (v/vec4 [0 0 0 1]))
+
+(def ^Vector4 WHITE (v/vec4 [1 1 1 1]))
+
+(def ^Vector4 SEMI-TRANSPARENT-GREY (v/vec4 [0.5 0.5 0.5 0.5]))
 
 (defn rgb-from-vector 
   "Converts a colour vector into an ARGB colour value"
