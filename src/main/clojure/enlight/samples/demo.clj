@@ -1,6 +1,6 @@
 (ns enlight.samples.demo
   (:require [mikera.vectorz.core :as v])
-  (:require [clisk core patterns functions])
+  (:require [clisk core patterns functions colours])
   (:use clojure.reflect)
   (:use [enlight core]))
 
@@ -14,7 +14,9 @@
             :right [1 0 0]}
    :root (union 
            [(with (sphere) {:colour (function (clisk.functions/take-components 3 (clisk.patterns/vsnoise)))})
-            (with (sphere) {:centre (v/vec3 [-1 0 0])})]) 
+            (with (sphere) {:centre (v/vec3 [-1 0 0])})
+            (with (sky-sphere) {:colour (function clisk.colours/desert-map)})
+            ]) 
   ])
 
 

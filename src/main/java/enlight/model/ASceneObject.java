@@ -12,7 +12,7 @@ import enlight.EnlightError;
  * 
  * @author Mike
  */
-public abstract class ASceneObject implements ISceneObject {
+public abstract class ASceneObject implements ISceneObject, Cloneable {
 	
 	public ASceneObject() {
 		

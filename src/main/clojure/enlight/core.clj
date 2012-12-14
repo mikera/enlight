@@ -49,6 +49,8 @@
     (Sphere. (v/vec centre) 1.0)))
 
 (defn sky-sphere 
+  (^ASceneObject []
+    (SkySphere.))
   (^ASceneObject [texture]
     (with (SkySphere.) {:colour (compile-function texture)})))
 
