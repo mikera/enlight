@@ -29,7 +29,7 @@ public abstract class APrimitive extends ASceneObject {
 		colourFunction=(ATransform) (props.containsKey(Key.COLOUR)?props.get(Key.COLOUR):old.colourFunction);
 	}
 
-	public void getAmbientColour(Vector3 position, Vector3 colourOut) {
+	public void getPigment(Vector3 position, Vector3 colourOut) {
 		colourFunction.transform(position,colourOut);
 	}
 	
