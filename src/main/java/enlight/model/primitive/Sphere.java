@@ -16,6 +16,7 @@ public class Sphere extends AFinitePrimitive {
 	@Override
 	public HashMap<Object,Object> getProperties() {
 		HashMap<Object,Object> hm=super.getProperties();
+		hm.put(Key.TYPE, Key.SPHERE);
 		hm.put(Key.CENTRE, centre);
 		hm.put(Key.RADIUS, Double.valueOf(radius));		
 		return hm;

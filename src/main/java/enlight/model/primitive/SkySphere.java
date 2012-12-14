@@ -1,9 +1,19 @@
 package enlight.model.primitive;
 
+import java.util.Map;
+
 import mikera.vectorz.geom.Ray;
 import enlight.model.IntersectionInfo;
 
 public final class SkySphere extends AInfinitePrimitive {
+
+	public SkySphere(SkySphere skySphere, Map<Object, Object> props) {
+		super(skySphere,props);
+	}
+	
+	public SkySphere() {
+		
+	}
 
 	@Override
 	public boolean getIntersection(Ray ray,
@@ -22,5 +32,9 @@ public final class SkySphere extends AInfinitePrimitive {
 		result.surfaceNormal.set(ray.direction);
 		result.surfaceNormal.negate();
 		return true;
+	}
+	
+	@Override public SkySphere with(Map<Object,Object> props) {
+		return new SkySphere(this,props);
 	}
 }
