@@ -17,6 +17,7 @@
 
 (def ^:dynamic *show-warnings* false)
 
+(declare compile)
 (declare compile-object)
 (declare compile-function)
 (declare with)
@@ -57,8 +58,10 @@
 
 (defn with 
   "Modifies a scene object with a map of new/updated property values. Properties not valid for the given object are ignored"
-  ([^ASceneObject object props]
-    (.with object props)))
+  ([object props]
+    (if (instance? ASceneObject object)
+      (.with ^ASceneObject object props)
+      (merge object props))))
 
 (defn union
   "Creates a union of multiple objects"
@@ -69,6 +72,31 @@
 ;; ===========================================================
 ;; scene compilation
 
+(defn to-transform 
+  ([x]
+    (cond 
+      (instance? ATransform x) x
+      (instance? AVector x) (m/constant-transform x)
+      :default (error "Can't convert to a transform: " x))))
+
+(def param-conversions
+  {:colour #(to-transform %)})
+
+(defn convert-param [key val]
+  (if-let [conv (param-conversions key)]
+    (conv val)
+    val))
+
+(defn modify-object 
+  [object mods defaults]
+  (if-let [[v & vs :as ms] (seq mods)]
+    (cond 
+      (keyword? v) (recur (with object {v (first vs)}) (next vs) nil)
+      (associative? v) (recur (with object v) vs nil)
+      (seq defaults) (recur (with object {(first defaults) v}) (next vs) (next defaults))
+      :default (error "Can't modify object with " ms))
+    object))  ;; no change
+
 (defn compile-function 
   "Compiles a clisk vector function"
   ([obj & more-args]
@@ -78,19 +106,25 @@
       (list? obj) (clisk/vector-function obj :dimensions (or 3 3)) ;; compile a clisk function? 
       :default (error "not implemented!"))))
 
+(defn object-builder
+  [generator default-params]
+  (fn [& modifiers]
+    (modify-object (generator) modifiers default-params)))
+
 (def object-type-functions
   {:union union
-   :function compile-function})
+   :function compile-function
+   :sphere (object-builder sphere [:centre :radius])})
 
 (defn compile-object-vector
   "Compiles an object vector to produce a scene object"
   ([[type & stuff]]
     (if-let [fun (object-type-functions type)]
-      (apply fun stuff)
+      (apply fun (map compile stuff))
       (error "can't find object type function for " type))))
 
 (defn compile-object 
-  "Compiles a scene object"
+  "Compiles a scene object, presumably in a vector"
   ([obj]
     (cond 
       (instance? ASceneObject obj) obj
@@ -111,6 +145,26 @@
               :direction (v/vec3 dir)
               :position (v/vec3 pos)}))))
 
+(defn compile-vector 
+  "Compiles a vector, could be either a scene object or a vectorz vector"
+  ([v]
+    (if-let [xs (seq v)]
+      (let [[k & ks] xs]
+        (cond
+          (keyword? k) (compile-object v)
+          :default (v/vec v)))
+      (v/vec v))))
+
+(defn compile 
+  "Compiles an element in a scene description"
+  ([obj]
+    (cond 
+      (or (v/vec? obj) 
+          (instance? ATransform obj)
+          (clojure.core/number? obj)
+          (instance? ASceneObject obj)) obj ;; no change, already compiled
+      (clojure.core/vector? obj) (compile-vector obj)
+      :default (error "Unable to compile: " obj))))
 
 
 (def ENLIGHT-KEYWORDS
@@ -120,19 +174,19 @@
 (defn enlight-keyword? [x]
   (ENLIGHT-KEYWORDS x))
 
-(defn compile-element 
+(defn compile-scene-element 
   "Compiles a single element of a scene graph with the provided args (may be nil)"
   ([key args]
     (or (enlight-keyword? key) (error "Not a valid enlight keyword! [" key "]"))
     (case key
       :camera (compile-camera args)
-      :root (compile-object args)
+      :root (compile args)
       :tag args
       (error "Enlight keyword not implemented! [" key "]"))))
 
 (defn update-graph [graph key arg]
   "Updates a graph with a given key and argument. arg may be nil."
-  (merge graph {key (compile-element key arg)}))
+  (merge graph {key (compile-scene-element key arg)}))
 
 (defn compile-scene-list
   "Compiles a scene list for rendering into a scene graph"

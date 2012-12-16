@@ -15,6 +15,7 @@
    :root [:union 
             (with (sphere) {:colour (function (clisk.functions/take-components 3 (clisk.patterns/vsnoise)))})
             (with (sphere) {:centre (v/vec3 [-1 0 0])})
+            [:sphere [1 0 0] 0.5]
             (with (sky-sphere) {:colour (function [0.3 0.4 0.5])})] 
   ])
 
