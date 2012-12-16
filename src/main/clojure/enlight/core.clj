@@ -75,7 +75,7 @@
     (cond 
       (instance? ATransform obj) obj  ;; function already compiled, nice and easy
       (v/vec? obj) (m/constant-transform obj)
-      (sequable? obj) (clisk/vector-function obj :dimensions (or 3 3)) ;; compile a clisk function? 
+      (list? obj) (clisk/vector-function obj :dimensions (or 3 3)) ;; compile a clisk function? 
       :default (error "not implemented!"))))
 
 (def object-type-functions
