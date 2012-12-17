@@ -20,3 +20,8 @@
   (testing "Basic render"
     (let [^BufferedImage im (render d/EXAMPLE-SCENE :width 20 :height 20)]
       (is (= 20 (.getWidth im))))))
+
+(deftest test-scene-desc
+  (let [c (compile-all [:sphere])]
+    (is (scene-object? c))
+    (is (= :sphere (:type c)))))

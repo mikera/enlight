@@ -42,6 +42,9 @@
 ;; ===========================================================
 ;; primitive constructors
 
+(defn scene-object? [foo]
+  (instance? ASceneObject foo))
+
 (defn sphere 
   "Creates a sphere"
  (^ASceneObject []
@@ -58,7 +61,7 @@
 (defn with 
   "Modifies a scene object with a map of new/updated property values. Properties not valid for the given object are ignored"
   ([object props]
-    (if (instance? ASceneObject object)
+    (if (scene-object? object)
       (.with ^ASceneObject object props)
       (merge object props))))
 

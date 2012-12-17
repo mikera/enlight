@@ -3,6 +3,8 @@ package enlight.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import clojure.lang.ILookup;
+
 import mikera.vectorz.geom.BoundBox;
 
 import enlight.EnlightError;
@@ -12,7 +14,7 @@ import enlight.EnlightError;
  * 
  * @author Mike
  */
-public abstract class ASceneObject implements ISceneObject, Cloneable {
+public abstract class ASceneObject implements ISceneObject, Cloneable, ILookup {
 	
 	public ASceneObject() {
 		
@@ -52,4 +54,16 @@ public abstract class ASceneObject implements ISceneObject, Cloneable {
 	public boolean isFinite() {
 		return false;
 	}
+	
+	@Override
+	public Object valAt(Object key) {
+		Map<Object,Object> props=getProperties();
+		return props.get(key);
+	}
+
+	@Override
+	public Object valAt(Object key, Object notFound) {
+		Map<Object,Object> props=getProperties();
+		return props.containsKey(key)?props.get(key):notFound;
+	}	
 }
