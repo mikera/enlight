@@ -22,6 +22,11 @@
     (let [^BufferedImage im (render d/EXAMPLE-SCENE :width 20 :height 20)]
       (is (= 20 (.getWidth im))))))
 
+(deftest test-literal-compile
+  (let [c (compile-all 1)]
+    (is (number? c))
+    (is (= 1 c))))
+
 (deftest test-vector-compile
   (let [c (compile-all [1 2 3])]
     (is (v/vec? c))
