@@ -7,7 +7,7 @@
   (:import [mikera.transformz ATransform])
   (:import [enlight.model ASceneObject IntersectionInfo])
   (:import [mikera.vectorz.geom Ray BoundBox])
-  (:import [enlight.model.primitive Sphere SkySphere Union])
+  (:import [enlight.model.primitive Sphere SkySphere Union Plane])
   (:import [java.awt.image BufferedImage])
   (:import [mikera.image]))
 
@@ -52,6 +52,15 @@
     (sphere (v/vec3) 1.0))
   (^ASceneObject [centre radius]
     (Sphere. (v/vec centre) 1.0)))
+
+(defn plane 
+  "Creates a plane"
+ (^ASceneObject []
+    (Plane. (v/vec3 [1 0 0]) 1.0))
+ (^ASceneObject [normal]
+    (Plane. (v/vec normal) 1.0)) 
+ (^ASceneObject [normal distance]
+    (Plane. (v/vec normal) distance)))
 
 (defn sky-sphere 
   (^ASceneObject []
@@ -121,6 +130,7 @@
   {:union union
    :function compile-function
    :sphere (object-builder sphere [:centre :radius])
+   :plane (object-builder sphere [:normal :distance])
    :sky-sphere (object-builder sky-sphere [:colour])})
 
 (defn compile-object-vector
