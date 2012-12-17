@@ -19,6 +19,7 @@
 (declare compile-all)
 (declare compile-object)
 (declare compile-function)
+(declare convert-param convert-params)
 (declare with)
 
 (defmacro error
@@ -62,8 +63,8 @@
   "Modifies a scene object with a map of new/updated property values. Properties not valid for the given object are ignored"
   ([object props]
     (if (scene-object? object)
-      (.with ^ASceneObject object props)
-      (merge object props))))
+      (.with ^ASceneObject object (convert-params props))
+      (error "Can't apply properties to: " object))))
 
 (defn union
   "Creates a union of multiple objects"
@@ -88,6 +89,9 @@
   (if-let [conv (param-conversions key)]
     (conv val)
     val))
+
+(defn convert-params [props]
+  (into {} (map (fn [[k v]] [k (convert-param k v)]) props)))
 
 (defn modify-object 
   [object mods defaults]
@@ -162,7 +166,8 @@
   "Compiles an element in a scene description"
   ([obj]
     (cond 
-      (or (v/vec? obj) 
+      (or (v/vec? obj)
+          (keyword? obj)
           (instance? ATransform obj)
           (clojure.core/number? obj)
           (instance? ASceneObject obj)) obj ;; no change, already compiled

@@ -2,6 +2,7 @@
   (:use [enlight core])
   (:require [enlight.samples.demo :as d])
   (:require [mikera.vectorz.core :as v])
+  (:require [mikera.vectorz.matrix :as m])
   (:import [java.awt.image BufferedImage])
   (:use [clojure test]))
 
@@ -44,7 +45,12 @@
     (is (scene-object? c))
     (is (= :sphere (:type c)))
     (is (= 2.0 (:radius c)))
-    (is (= (v/vec [1 1 1]) (:centre c)))))
+    (is (= (v/vec [1 1 1]) (:centre c))))
+  (let [c (compile-all [:sphere :radius 2 :colour [1 0 0]])]
+    (is (scene-object? c))
+    (is (= :sphere (:type c)))
+    (is (= 2.0 (:radius c)))
+    (is (= (v/vec [1 0 0]) (m/* (:colour c) (v/vec [10 11 12]))))))
 
 (deftest test-sky-sphere-compile
   (let [c (compile-all [:sky-sphere])]
