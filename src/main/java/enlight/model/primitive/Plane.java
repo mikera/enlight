@@ -7,7 +7,6 @@ import clojure.lang.Keyword;
 
 import enlight.Key;
 import enlight.model.IntersectionInfo;
-import mikera.util.Maths;
 import mikera.vectorz.Vector3;
 import mikera.vectorz.geom.Ray;
 
