@@ -1,5 +1,6 @@
 package enlight.model.primitive;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -34,6 +35,7 @@ public final class Union extends ACompositeObject {
 	public HashMap<Object,Object> getProperties() {
 		HashMap<Object,Object> hm=super.getProperties();
 		hm.put(Key.TYPE, getType());
+		hm.put(Key.OBJECTS, Arrays.asList(objects));
 		return hm;
 	}
 	

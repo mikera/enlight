@@ -12,6 +12,8 @@ public class Key {
 	
 	public static final Keyword COLOUR=Keyword.intern(null, "colour");
 	
+	public static final Keyword OBJECTS=Keyword.intern(null, "objects");
+
 	public static final Keyword CENTRE=Keyword.intern(null, "centre");	
 	public static final Keyword RADIUS=Keyword.intern(null, "radius");
 
