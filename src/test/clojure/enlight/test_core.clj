@@ -45,3 +45,8 @@
   (let [c (compile-all [:sky-sphere])]
     (is (scene-object? c))
     (is (= :sky-sphere (:type c)))))
+
+(deftest test-union-compile
+  (let [c (compile-all [:union])]
+    (is (scene-object? c))
+    (is (= :union (:type c)))))

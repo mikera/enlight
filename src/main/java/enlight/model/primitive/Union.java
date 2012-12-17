@@ -1,6 +1,7 @@
 package enlight.model.primitive;
 
 import java.util.Collection;
+import java.util.HashMap;
 
 import clojure.lang.Keyword;
 
@@ -27,6 +28,13 @@ public final class Union extends ACompositeObject {
 			if (!objects[i].isFinite()) anyInfinite=true;
 		}
 		finite=!anyInfinite;
+	}
+	
+	@Override
+	public HashMap<Object,Object> getProperties() {
+		HashMap<Object,Object> hm=super.getProperties();
+		hm.put(Key.TYPE, getType());
+		return hm;
 	}
 	
 	@Override public Keyword getType() {
