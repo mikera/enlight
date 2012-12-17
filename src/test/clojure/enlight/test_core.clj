@@ -25,9 +25,18 @@
 (deftest test-vector-compile
   (let [c (compile-all [1 2 3])]
     (is (v/vec? c))
-    (is (= 3 (v/length c)))))
+    (is (= 3 (v/length c))))
+  (let [c (compile-all [1])]
+    (is (v/vec? c))
+    (is (= 1 (v/length c)))))
 
 (deftest test-sphere-compile
   (let [c (compile-all [:sphere])]
     (is (scene-object? c))
-    (is (= :sphere (:type c)))))
+    (is (= :sphere (:type c)))
+    (is (= 1.0 (:radius c))))
+  (let [c (compile-all [:sphere [1 1 1] 2])]
+    (is (scene-object? c))
+    (is (= :sphere (:type c)))
+    (is (= 2.0 (:radius c)))
+    (is (= (v/vec [1 1 1]) (:centre c)))))
