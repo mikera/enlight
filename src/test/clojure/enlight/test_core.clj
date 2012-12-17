@@ -1,6 +1,7 @@
 (ns enlight.test-core
   (:use [enlight core])
   (:require [enlight.samples.demo :as d])
+  (:require [mikera.vectorz.core :as v])
   (:import [java.awt.image BufferedImage])
   (:use [clojure test]))
 
@@ -21,7 +22,12 @@
     (let [^BufferedImage im (render d/EXAMPLE-SCENE :width 20 :height 20)]
       (is (= 20 (.getWidth im))))))
 
-(deftest test-scene-desc
+(deftest test-vector-compile
+  (let [c (compile-all [1 2 3])]
+    (is (v/vec? c))
+    (is (= 3 (v/length c)))))
+
+(deftest test-sphere-compile
   (let [c (compile-all [:sphere])]
     (is (scene-object? c))
     (is (= :sphere (:type c)))))
