@@ -3,6 +3,8 @@ package enlight.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import clojure.lang.Keyword;
+
 import mikera.vectorz.Vector3;
 import mikera.vectorz.geom.BoundBox;
 import mikera.vectorz.geom.Ray;
@@ -41,4 +43,6 @@ public interface ISceneObject {
 	 * @return
 	 */
 	public ASceneObject with(Map<Object, Object> properties);
+
+	Keyword getType();
 }

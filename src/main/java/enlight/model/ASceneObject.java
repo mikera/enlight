@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import clojure.lang.ILookup;
+import clojure.lang.Keyword;
 
 import mikera.vectorz.geom.BoundBox;
 
@@ -54,6 +55,9 @@ public abstract class ASceneObject implements ISceneObject, Cloneable, ILookup {
 	public boolean isFinite() {
 		return false;
 	}
+	
+	@Override
+	public abstract Keyword getType();
 	
 	@Override
 	public Object valAt(Object key) {

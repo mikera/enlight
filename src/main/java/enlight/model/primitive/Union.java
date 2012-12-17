@@ -2,10 +2,13 @@ package enlight.model.primitive;
 
 import java.util.Collection;
 
+import clojure.lang.Keyword;
+
 import mikera.vectorz.Vector3;
 import mikera.vectorz.geom.BoundBox;
 import mikera.vectorz.geom.Ray;
 import enlight.EnlightError;
+import enlight.Key;
 import enlight.model.ASceneObject;
 import enlight.model.IntersectionInfo;
 
@@ -24,6 +27,10 @@ public final class Union extends ACompositeObject {
 			if (!objects[i].isFinite()) anyInfinite=true;
 		}
 		finite=!anyInfinite;
+	}
+	
+	@Override public Keyword getType() {
+		return Key.UNION;
 	}
 	
 	public static Union of(Collection<ASceneObject> objects) {

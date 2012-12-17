@@ -116,7 +116,8 @@
 (def object-type-functions
   {:union union
    :function compile-function
-   :sphere (object-builder sphere [:centre :radius])})
+   :sphere (object-builder sphere [:centre :radius])
+   :sky-sphere (object-builder sky-sphere [:colour])})
 
 (defn compile-object-vector
   "Compiles an object vector to produce a scene object"

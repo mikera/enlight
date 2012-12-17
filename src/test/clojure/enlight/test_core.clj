@@ -40,3 +40,8 @@
     (is (= :sphere (:type c)))
     (is (= 2.0 (:radius c)))
     (is (= (v/vec [1 1 1]) (:centre c)))))
+
+(deftest test-sky-sphere-compile
+  (let [c (compile-all [:sky-sphere])]
+    (is (scene-object? c))
+    (is (= :sky-sphere (:type c)))))

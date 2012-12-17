@@ -1,8 +1,12 @@
 package enlight.model.primitive;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import clojure.lang.Keyword;
+
 import mikera.vectorz.geom.Ray;
+import enlight.Key;
 import enlight.model.IntersectionInfo;
 
 public final class SkySphere extends AInfinitePrimitive {
@@ -13,6 +17,17 @@ public final class SkySphere extends AInfinitePrimitive {
 	
 	public SkySphere() {
 		
+	}
+	
+	@Override
+	public HashMap<Object,Object> getProperties() {
+		HashMap<Object,Object> hm=super.getProperties();
+		hm.put(Key.TYPE, getType());
+		return hm;
+	}
+	
+	@Override public Keyword getType() {
+		return Key.SKY_SPHERE;
 	}
 
 	@Override
