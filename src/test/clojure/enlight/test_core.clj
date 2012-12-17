@@ -3,6 +3,7 @@
   (:require [enlight.samples.demo :as d])
   (:require [mikera.vectorz.core :as v])
   (:require [mikera.vectorz.matrix :as m])
+  (:require [clisk core functions colours patterns])
   (:import [java.awt.image BufferedImage])
   (:use [clojure test]))
 
@@ -73,3 +74,9 @@
   (let [c (compile-all [:union])]
     (is (scene-object? c))
     (is (= :union (:type c)))))
+
+(deftest test-function-compile
+  (let [^mikera.transformz.ATransform c (compile-all (function (clisk.patterns/checker [0 0 0] [1 1 1])))]
+    (is (m/transform? c))
+    (is (= 3 (.inputDimensions c)))
+    (is (= 3 (.outputDimensions c)))))
