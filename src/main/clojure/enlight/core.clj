@@ -3,7 +3,6 @@
   (:require [mikera.vectorz.matrix :as m])
   (:require [enlight.colours :as c])
   (:require [clisk.core :as clisk])
-  (:refer-clojure :exclude [compile])
   (:import [mikera.vectorz Vector3 Vector4 AVector Vectorz])
   (:import [mikera.transformz ATransform])
   (:import [enlight.model ASceneObject IntersectionInfo])
@@ -17,7 +16,7 @@
 
 (def ^:dynamic *show-warnings* false)
 
-(declare compile)
+(declare compile-all)
 (declare compile-object)
 (declare compile-function)
 (declare with)
@@ -120,7 +119,7 @@
   "Compiles an object vector to produce a scene object"
   ([[type & stuff]]
     (if-let [fun (object-type-functions type)]
-      (apply fun (map compile stuff))
+      (apply fun (map compile-all stuff))
       (error "can't find object type function for " type))))
 
 (defn compile-object 
@@ -155,7 +154,7 @@
           :default (v/vec v)))
       (v/vec v))))
 
-(defn compile 
+(defn compile-all 
   "Compiles an element in a scene description"
   ([obj]
     (cond 
@@ -180,7 +179,7 @@
     (or (enlight-keyword? key) (error "Not a valid enlight keyword! [" key "]"))
     (case key
       :camera (compile-camera args)
-      :root (compile args)
+      :root (compile-all args)
       :tag args
       (error "Enlight keyword not implemented! [" key "]"))))
 
