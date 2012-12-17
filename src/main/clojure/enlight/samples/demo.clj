@@ -2,7 +2,7 @@
   (:require [mikera.vectorz.core :as v])
   (:require [clisk core patterns functions colours])
   (:use clojure.reflect)
-  (:use [enlight core]))
+  (:use [enlight.core]))
 
 (set! *warn-on-reflection* true)
 (set! *unchecked-math* true)

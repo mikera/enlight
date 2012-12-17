@@ -93,7 +93,7 @@
     (cond 
       (keyword? v) (recur (with object {v (first vs)}) (next vs) nil)
       (associative? v) (recur (with object v) vs nil)
-      (seq defaults) (recur (with object {(first defaults) v}) (next vs) (next defaults))
+      (seq defaults) (recur (with object {(first defaults) v}) vs (next defaults))
       :default (error "Can't modify object with " ms))
     object))  ;; no change
 
@@ -102,7 +102,7 @@
   ([obj & more-args]
     (cond 
       (instance? ATransform obj) obj  ;; function already compiled, nice and easy
-      (v/vec? obj) (m/constant-transform obj)
+      (v/vec? obj) (m/constant-transform obj) ;; constant vector
       (list? obj) (clisk/vector-function obj :dimensions (or 3 3)) ;; compile a clisk function? 
       :default (error "not implemented!"))))
 
