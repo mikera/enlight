@@ -1,4 +1,4 @@
-package enlight;
+package enlight.model;
 
 import static org.junit.Assert.*;
 import java.util.HashMap;
@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import enlight.Key;
 import enlight.model.IntersectionInfo;
 import enlight.model.primitive.Sphere;
 import mikera.vectorz.Vector3;
