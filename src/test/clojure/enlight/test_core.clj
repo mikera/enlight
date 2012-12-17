@@ -36,6 +36,18 @@
     (is (v/vec? c))
     (is (= 1 (v/length c)))))
 
+(deftest test-plane-compile
+  (let [c (compile-all [:plane])]
+    (is (scene-object? c))
+    (is (= :plane (:type c)))
+    (is (= 0.0 (:distance c))))
+  (let [c (compile-all [:plane [1 1 1] 1])]
+    (is (scene-object? c))
+    (is (v/approx= (v/normalise (v/vec [1 1 1])) (:normal c))))
+  (let [c (compile-all [:plane :colour [1 0 0]])]
+    (is (scene-object? c))
+    (is (= (v/vec [1 0 0]) (m/* (:colour c) (v/vec [10 11 12]))))))
+
 (deftest test-sphere-compile
   (let [c (compile-all [:sphere])]
     (is (scene-object? c))

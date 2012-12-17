@@ -56,11 +56,11 @@
 (defn plane 
   "Creates a plane"
  (^ASceneObject []
-    (Plane. (v/vec3 [1 0 0]) 1.0))
+    (Plane. (v/vec3 [1 0 0]) 0.0))
  (^ASceneObject [normal]
-    (Plane. (v/vec normal) 1.0)) 
+    (Plane. (v/vec3 normal) 0.0)) 
  (^ASceneObject [normal distance]
-    (Plane. (v/vec normal) distance)))
+    (Plane. (v/vec3 normal) distance)))
 
 (defn sky-sphere 
   (^ASceneObject []
@@ -130,7 +130,7 @@
   {:union union
    :function compile-function
    :sphere (object-builder sphere [:centre :radius])
-   :plane (object-builder sphere [:normal :distance])
+   :plane (object-builder plane [:normal :distance])
    :sky-sphere (object-builder sky-sphere [:colour])})
 
 (defn compile-object-vector

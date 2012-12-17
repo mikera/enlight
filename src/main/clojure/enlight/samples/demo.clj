@@ -16,6 +16,7 @@
             (with (sphere) {:colour (function (clisk.functions/take-components 3 (clisk.patterns/vsnoise)))})
             (with (sphere) {:centre (v/vec3 [-1 0 0])})
             [:sphere [1 0 0] 0.5]
+            [:plane [0 1 0] 0.8 :colour (function (clisk.patterns/checker 0 1))]
             (with (sky-sphere) {:colour (function [0.3 0.4 0.5])})] 
   ])
 
