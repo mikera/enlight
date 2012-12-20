@@ -13,10 +13,10 @@
             :up [0 1 0]
             :right [1 0 0]}
    :root [:union 
-            (with (sphere) {:colour (function (clisk.functions/take-components 3 (clisk.patterns/vsnoise)))})
-            (with (sphere) {:centre (v/vec3 [-1 0 0]) :colour (function (clisk.functions/scale 0.1 clisk.patterns/noise))})
+            (with (sphere) {:colour (function (take-components 3 (vsnoise)))})
+            (with (sphere) {:centre (v/vec3 [-1 0 0]) :colour (function (scale 0.1 noise))})
             [:sphere [1 -0.9 0] 0.1 :colour [1 0 1]]
-            [:plane [0 1 0] -1.0 :colour (function (clisk.functions/warp ['x 'z] (clisk.patterns/checker [0 0 0] [1 1 1])))]
+            [:plane [0 1 0] -1.0 :colour (function (warp ['x 'z] (checker [0 0 0] [1 1 1])))]
             (with (sky-sphere) {:colour (function [0.3 0.4 0.5])})] 
   ])
 
