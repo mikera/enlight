@@ -85,4 +85,4 @@
     (let [^mikera.transformz.ATransform c (compile-all (function (evaluate (v+ 1 2))))]
       (is (m/transform? c))
       (is (= 3 (.inputDimensions c)))
-      (is (= 1 (.outputDimensions c))))))
+      (is (= 3 (.outputDimensions c))))))

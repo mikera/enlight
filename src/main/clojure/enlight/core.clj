@@ -38,8 +38,12 @@
 
 (defmacro function
   "Produces a VectorFunction for a given clisk node" 
-  ([node]
-    `(n/with-merged-environment [clisk.live] (~'vector-function ~node :input-dimensions 3))))
+  ([node  & {:keys [inputs outputs] 
+             :or {inputs 3 outputs 3}}]
+    `(n/with-merged-environment [clisk.live] 
+       (~'vector-function 
+         (~'take-components ~(long outputs) ~node) 
+         :input-dimensions ~(long inputs)))))
 
 ;; ===========================================================
 ;; primitive constructors
