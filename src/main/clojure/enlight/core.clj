@@ -1,6 +1,7 @@
 (ns enlight.core
   (:require [mikera.vectorz.core :as v])
   (:require [mikera.vectorz.matrix :as m])
+  (:require [mikera.cljutils.namespace :as n])
   (:require [enlight.colours :as c])
   (:require [clisk.core :as clisk])
   (:import [mikera.vectorz Vector3 Vector4 AVector Vectorz])
@@ -38,7 +39,7 @@
 (defmacro function
   "Produces a VectorFunction for a given clisk node" 
   ([node]
-    `(clisk/vector-function ~node :input-dimensions 3)))
+    `(n/with-merged-environment [clisk.live] (~'vector-function ~node :input-dimensions 3))))
 
 ;; ===========================================================
 ;; primitive constructors
