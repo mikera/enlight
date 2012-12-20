@@ -76,7 +76,13 @@
     (is (= :union (:type c)))))
 
 (deftest test-function-compile
-  (let [^mikera.transformz.ATransform c (compile-all (function (clisk.patterns/checker [0 0 0] [1 1 1])))]
-    (is (m/transform? c))
-    (is (= 3 (.inputDimensions c)))
-    (is (= 3 (.outputDimensions c)))))
+  (testing "compiling a transform"
+    (let [^mikera.transformz.ATransform c (compile-all (function (checker [0 0 0] [1 1 1])))]
+      (is (m/transform? c))
+      (is (= 3 (.inputDimensions c)))
+      (is (= 3 (.outputDimensions c)))))
+  (testing "compiling a scalar value"
+    (let [^mikera.transformz.ATransform c (compile-all (function (evaluate (v+ 1 2))))]
+      (is (m/transform? c))
+      (is (= 3 (.inputDimensions c)))
+      (is (= 1 (.outputDimensions c))))))
