@@ -3,6 +3,8 @@ enlight
 
 A Clojure raytracer
 
+[![Build Status](https://travis-ci.org/mikera/enlight.png?branch=master)](https://travis-ci.org/mikera/enlight)
+
 ### Planned features:
 
  - Very fast rendering (competitive with POV-Ray)
