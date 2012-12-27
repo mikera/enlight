@@ -7,26 +7,29 @@ import mikera.vectorz.Vector3;
 import mikera.vectorz.geom.BoundBox;
 import mikera.vectorz.geom.Ray;
 import clojure.lang.Keyword;
-import enlight.EnlightError;
 import enlight.Key;
 
 public class Scene extends ASceneObject {
 
 	public ASceneObject root;
+	public Map<Object,Object> camera;
 	
 	public Scene() {
-		
+		root=null;
+		camera=null;
 	}
 	
 	protected Scene(Scene old, Map<Object, Object> props) {
 		super(old,props);
 		this.root=(ASceneObject) (props.containsKey(Key.ROOT)?props.get(Key.ROOT):old.root);
+		this.camera=(Map<Object,Object>) (props.containsKey(Key.CAMERA)?props.get(Key.CAMERA):old.camera);
 	}
 
 	@Override
 	public HashMap<Object,Object> getProperties() {
 		HashMap<Object,Object> props= super.getProperties();
 		props.put(Key.ROOT, root);
+		props.put(Key.CAMERA, camera);
 		return props;
 	}
 	

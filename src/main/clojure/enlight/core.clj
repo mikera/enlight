@@ -6,7 +6,7 @@
   (:require [clisk.core :as clisk])
   (:import [mikera.vectorz Vector3 Vector4 AVector Vectorz])
   (:import [mikera.transformz ATransform])
-  (:import [enlight.model ASceneObject IntersectionInfo])
+  (:import [enlight.model Scene ASceneObject IntersectionInfo])
   (:import [mikera.vectorz.geom Ray BoundBox])
   (:import [enlight.model.primitive Sphere SkySphere Union Plane])
   (:import [java.awt.image BufferedImage])
@@ -75,7 +75,7 @@
 
 (defn with 
   "Modifies a scene object with a map of new/updated property values. Properties not valid for the given object are ignored"
-  ([object props]
+  (^ASceneObject [^ASceneObject object props]
     (if (scene-object? object)
       (.with ^ASceneObject object (convert-params props))
       (error "Can't apply properties to: " object))))
@@ -85,6 +85,10 @@
   (^ASceneObject [& objects]
     (Union/of ^java.util.List (vec (map compile-object objects)))))
 
+(defn new-scene
+  "Creates a new scene"
+  (^Scene [] 
+    (Scene.)))
 
 ;; ===========================================================
 ;; scene compilation
@@ -207,33 +211,35 @@
       :tag args
       (error "Enlight keyword not implemented! [" key "]"))))
 
-(defn update-graph [graph key arg]
-  "Updates a graph with a given key and argument. arg may be nil."
-  (merge graph {key (compile-scene-element key arg)}))
+(defn update-graph 
+  "Updates a scene with a given key and argument. arg may be nil."
+  ([^Scene scene key arg]
+    (.with scene ^java.util.Map {key (compile-scene-element key arg)})))
 
 (defn compile-scene-list
   "Compiles a scene list for rendering into a scene graph"
-  ([scene]
-    (let [empty-graph {}] 
-      (compile-scene-list empty-graph scene)))
-  ([graph s]
+  (^Scene [scene-desc]
+    (let [empty-scene (new-scene)] 
+      (compile-scene-list empty-scene scene-desc)))
+  (^Scene [^Scene scene s]
     (if-let [s (seq s)]
-      (compile-scene-list graph (first s) (next s))
-      graph))
-  ([graph key xs]
+      (compile-scene-list scene (first s) (next s))
+      scene))
+  (^Scene [^Scene scene key xs]
     (if-let [s (seq xs)]
       (let [next-item (first s)]
         (if (enlight-keyword? next-item)
-          (compile-scene-list (update-graph graph key nil) next-item (next s))
-          (compile-scene-list graph key (first s) (next s))))
-      (update-graph graph key nil)))
-  ([graph key arg xs]
-    (compile-scene-list (update-graph graph key arg) xs)))
+          (compile-scene-list (update-graph scene key nil) next-item (next s))
+          (compile-scene-list scene key (first s) (next s))))
+      (update-graph scene key nil)))
+  ([scene key arg xs]
+    (compile-scene-list (update-graph scene key arg) xs)))
 
 
-(defn compile-scene [scene]
+(defn compile-scene 
   "Compiles a scene for rendering, applying any default behavious and validation"
-  (compile-scene-list scene))
+  (^Scene [scene]
+    (compile-scene-list scene)))
 
 (defn position 
   (^Vector3 [camera]
@@ -282,14 +288,14 @@
 
 (defn render 
   "Render a scene to a new bufferedimage"
-  (^BufferedImage [scene
+  (^BufferedImage [scene-desc
               & {:keys [width height] 
                  :or {width 256 height 256}}]
   (let [width (int width)
         height (int height)
-        graph (compile-scene scene)
-        ^ASceneObject root (or (:root graph) (error "Scene has no root object!"))
-        camera (or (:camera graph) (error "Scene has no camera!"))
+        ^Scene scene (compile-scene scene-desc)
+        ^ASceneObject root (or (.root scene) (error "Scene has no root object!"))
+        camera (or (.camera scene) (error "Scene has no camera!"))
         colour-result (v/vec4 [0.5 0 0.8 1])
         ^Vector3 camera-pos (position camera)
         ^Vector3 camera-up (up-direction camera)
@@ -305,7 +311,7 @@
           (v/add-multiple! dir camera-right xp)
           (v/add-multiple! dir camera-up (- yp))
           (v/normalise! dir)
-          (trace-ray (:root graph) (ray camera-pos dir) colour-result)
+          (trace-ray (.root scene) (ray camera-pos dir) colour-result)
           (.setRGB im ix iy (c/argb-from-vector4 colour-result)))))
     im)))
 

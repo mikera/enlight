@@ -5,6 +5,7 @@
   (:require [mikera.vectorz.matrix :as m])
   (:require [clisk core functions colours patterns])
   (:import [java.awt.image BufferedImage])
+  (:import [enlight.model Scene])
   (:use [clojure test]))
 
 (deftest test-camera
@@ -12,8 +13,8 @@
     (let [camera (compile-camera nil)]
       (is (not= camera nil))))
   (testing "compiling graph with cameras"
-    (let [graph (compile-scene-list [:camera :camera])]
-      (is (graph :camera))))) 
+    (let [scene (compile-scene-list [:camera :camera])]
+      (is (instance? Scene scene))))) 
 
 (deftest expected-scene-errors
   (testing "compiling graph with no camera"
