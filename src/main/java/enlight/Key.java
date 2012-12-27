@@ -21,6 +21,9 @@ public class Key {
 	public static final Keyword NORMAL = Keyword.intern(null, "normal");
 	public static final Keyword DISTANCE = Keyword.intern(null, "distance");
 
+	public static final Keyword SCENE = Keyword.intern(null, "scene");
+	public static final Object ROOT = Keyword.intern(null,"root");
+
 
 
 }
