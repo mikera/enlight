@@ -5,7 +5,9 @@ import static org.junit.Assert.*;
 
 import enlight.model.ASceneObject;
 import enlight.model.Utils;
+import enlight.model.primitive.Plane;
 import enlight.model.primitive.Sphere;
+import enlight.model.primitive.Union;
 import mikera.vectorz.Vector3;
 import mikera.vectorz.geom.BoundBox;
 
@@ -37,7 +39,13 @@ public class TestPrimitives {
 
 
 	@Test public void genericPrimitiveTests() {
-		doPrimitiveTests(new Sphere(Vector3.of(1.5,-1,0),1.0));
+		ASceneObject sphere=new Sphere(Vector3.of(1.5,-1,0),1.0);
+		doPrimitiveTests(sphere);
+		
+		ASceneObject plane=new Plane(Vector3.of(0,1,0),10.0);
+		doPrimitiveTests(new Plane(Vector3.of(0,1,0),10.0));
+		
+		doPrimitiveTests(Union.of(sphere,plane));
 	}
 
 

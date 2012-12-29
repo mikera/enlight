@@ -47,6 +47,10 @@ public final class Union extends ACompositeObject {
 		return new Union(objects.toArray(new ASceneObject[objects.size()]));
 	}
 	
+	public static Union of(ASceneObject... objects) {
+		return new Union(objects);
+	}
+	
 	@Override
 	public boolean isFinite() {
 		return finite;
