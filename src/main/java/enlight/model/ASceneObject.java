@@ -21,6 +21,12 @@ public abstract class ASceneObject implements ISceneObject, Cloneable, ILookup {
 		
 	}
 	
+	public ASceneObject assoc(Object key, Object value) {
+		HashMap<Object, Object> hm=new HashMap<Object,Object>();
+		hm.put(key,value);
+		return with(hm);
+	}
+	
 	protected ASceneObject(ASceneObject old, Map<Object, Object> props) {
 		this();
 	}
@@ -47,9 +53,7 @@ public abstract class ASceneObject implements ISceneObject, Cloneable, ILookup {
 	}
 	
 	public String toString() {
-		return super.toString();
-		// TODO: fix this once we get latest vectorz with fixed hashcodes
-		// return getProperties().toString();
+		return getProperties().toString();
 	}
 	
 	public boolean isFinite() {
