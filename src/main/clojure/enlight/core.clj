@@ -214,7 +214,8 @@
 (defn update-graph 
   "Updates a scene with a given key and argument. arg may be nil."
   ([^Scene scene key arg]
-    (.with scene ^java.util.Map {key (compile-scene-element key arg)})))
+    (let [^java.util.Map props {key (compile-scene-element key arg)}]
+      (.with scene props))))
 
 (defn compile-scene-list
   "Compiles a scene list for rendering into a scene graph"
