@@ -26,6 +26,8 @@ public class Key {
 
 	public static final Keyword LIGHT_SOURCE = Keyword.intern(null,"light-source");
 
+	public static final Keyword SHADOWLESS =  Keyword.intern(null,"shadowless");
+
 
 
 }
