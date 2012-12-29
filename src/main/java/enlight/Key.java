@@ -24,6 +24,8 @@ public class Key {
 	public static final Keyword SCENE = Keyword.intern(null, "scene");
 	public static final Object ROOT = Keyword.intern(null,"root");
 
+	public static final Keyword LIGHT_SOURCE = Keyword.intern(null,"light-source");
+
 
 
 }
