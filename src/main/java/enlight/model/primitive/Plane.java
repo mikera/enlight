@@ -15,8 +15,8 @@ public class Plane extends AInfinitePrimitive {
 	private final double distance;
 	
 	@Override
-	public HashMap<Object,Object> getProperties() {
-		HashMap<Object,Object> hm=super.getProperties();
+	public HashMap<Keyword, Object> getProperties() {
+		HashMap<Keyword,Object> hm=super.getProperties();
 		hm.put(Key.TYPE, getType());
 		hm.put(Key.NORMAL, normal);
 		hm.put(Key.DISTANCE, Double.valueOf(distance));		

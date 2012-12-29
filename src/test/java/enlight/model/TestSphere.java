@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import clojure.lang.Keyword;
+
 import enlight.Key;
 import enlight.model.IntersectionInfo;
 import enlight.model.primitive.Sphere;
@@ -54,14 +56,14 @@ public class TestSphere {
 	
 	@Test public void testProperties() {
 		Sphere s=new Sphere(new Vector3(0,0,3),2);
-		Map<Object,Object> p=s.getProperties();
+		Map<Keyword,Object> p=s.getProperties();
 		assertEquals(2.0,(Double)p.get(Key.RADIUS),0.0);
 		
 		HashMap<Object,Object> hm=new HashMap<Object,Object>();
 		hm.put(Key.RADIUS, 3.0);
 		
 		Sphere t=s.with(hm);
-		Map<Object,Object> q=t.getProperties();
+		Map<Keyword,Object> q=t.getProperties();
 		assertEquals(3.0,(Double)q.get(Key.RADIUS),0.0);
 	}
 }

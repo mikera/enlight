@@ -32,8 +32,8 @@ public final class Union extends ACompositeObject {
 	}
 	
 	@Override
-	public HashMap<Object,Object> getProperties() {
-		HashMap<Object,Object> hm=super.getProperties();
+	public HashMap<Keyword, Object> getProperties() {
+		HashMap<Keyword,Object> hm=super.getProperties();
 		hm.put(Key.TYPE, getType());
 		hm.put(Key.OBJECTS, Arrays.asList(objects));
 		return hm;

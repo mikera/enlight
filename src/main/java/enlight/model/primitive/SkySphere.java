@@ -20,8 +20,8 @@ public final class SkySphere extends AInfinitePrimitive {
 	}
 	
 	@Override
-	public HashMap<Object,Object> getProperties() {
-		HashMap<Object,Object> hm=super.getProperties();
+	public HashMap<Keyword, Object> getProperties() {
+		HashMap<Keyword,Object> hm=super.getProperties();
 		hm.put(Key.TYPE, getType());
 		return hm;
 	}

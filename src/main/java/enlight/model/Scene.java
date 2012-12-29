@@ -26,8 +26,8 @@ public class Scene extends ASceneObject {
 	}
 
 	@Override
-	public HashMap<Object,Object> getProperties() {
-		HashMap<Object,Object> props= super.getProperties();
+	public HashMap<Keyword, Object> getProperties() {
+		HashMap<Keyword,Object> props= super.getProperties();
 		props.put(Key.ROOT, root);
 		props.put(Key.CAMERA, camera);
 		return props;

@@ -21,7 +21,10 @@ public abstract class ASceneObject implements ISceneObject, Cloneable, ILookup {
 		
 	}
 	
-	public ASceneObject assoc(Object key, Object value) {
+	/**
+	 * Assoc a new key/value pair into the scene object
+	 */
+	public ASceneObject assoc(Keyword key, Object value) {
 		HashMap<Object, Object> hm=new HashMap<Object,Object>();
 		hm.put(key,value);
 		return with(hm);
@@ -32,8 +35,8 @@ public abstract class ASceneObject implements ISceneObject, Cloneable, ILookup {
 	}
 
 	@Override
-	public HashMap<Object,Object> getProperties() {
-		return new HashMap<Object,Object>();
+	public HashMap<Keyword, Object> getProperties() {
+		return new HashMap<Keyword,Object>();
 	}
 	
 	@Override
@@ -65,13 +68,13 @@ public abstract class ASceneObject implements ISceneObject, Cloneable, ILookup {
 	
 	@Override
 	public Object valAt(Object key) {
-		Map<Object,Object> props=getProperties();
+		Map<Keyword,Object> props=getProperties();
 		return props.get(key);
 	}
 
 	@Override
 	public Object valAt(Object key, Object notFound) {
-		Map<Object,Object> props=getProperties();
+		Map<Keyword,Object> props=getProperties();
 		return props.containsKey(key)?props.get(key):notFound;
 	}	
 }

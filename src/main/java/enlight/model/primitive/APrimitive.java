@@ -3,6 +3,8 @@ package enlight.model.primitive;
 import java.util.HashMap;
 import java.util.Map;
 
+import clojure.lang.Keyword;
+
 import enlight.Key;
 import enlight.model.ASceneObject;
 import enlight.model.IntersectionInfo;
@@ -34,8 +36,8 @@ public abstract class APrimitive extends ASceneObject {
 	}
 	
 	@Override
-	public HashMap<Object,Object> getProperties() {
-		HashMap<Object,Object> hm=super.getProperties();
+	public HashMap<Keyword, Object> getProperties() {
+		HashMap<Keyword,Object> hm=super.getProperties();
 		hm.put(Key.COLOUR, colourFunction);
 		return hm;
 	}

@@ -3,6 +3,8 @@ package enlight.model.primitive;
 import java.util.HashMap;
 import java.util.Map;
 
+import clojure.lang.Keyword;
+
 import enlight.model.Utils;
 
 import mikera.vectorz.geom.BoundBox;
@@ -18,8 +20,8 @@ public abstract class AFinitePrimitive extends APrimitive {
 	}
 
 	@Override
-	public HashMap<Object,Object> getProperties() {
-		HashMap<Object,Object> hm=super.getProperties();
+	public HashMap<Keyword, Object> getProperties() {
+		HashMap<Keyword,Object> hm=super.getProperties();
 		return hm;
 	}
 	

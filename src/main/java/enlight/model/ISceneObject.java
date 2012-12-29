@@ -35,7 +35,7 @@ public interface ISceneObject {
 	 * Gets the property map for this scene object
 	 * @return
 	 */
-	public HashMap<Object, Object> getProperties();
+	public HashMap<Keyword, Object> getProperties();
 
 	/**
 	 * Creates a clone of this scene object with updated properties as specified.
