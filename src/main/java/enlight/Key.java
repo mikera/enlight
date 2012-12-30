@@ -19,6 +19,7 @@ public class Key {
 	public static final Keyword COLOUR=Keyword.intern(null, "colour");
 	public static final Keyword POSITION = Keyword.intern(null, "position");
 	public static final Keyword NORMAL = Keyword.intern(null, "normal");
+	public static final Keyword DIRECTION = Keyword.intern(null, "direction");
 	public static final Keyword DISTANCE = Keyword.intern(null, "distance");
 	
 	// sky sphere
