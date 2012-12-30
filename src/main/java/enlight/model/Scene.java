@@ -1,6 +1,8 @@
 package enlight.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import mikera.vectorz.Vector3;
@@ -12,16 +14,19 @@ import enlight.Key;
 public class Scene extends ASceneObject {
 
 	public ASceneObject root;
+	public List<LightSource> lightSources;
 	public Map<Object,Object> camera;
 	
 	public Scene() {
 		root=null;
 		camera=null;
+		lightSources=new ArrayList<LightSource>();
 	}
 	
 	protected Scene(Scene old, Map<Object, Object> props) {
 		super(old,props);
 		this.root=(ASceneObject) (props.containsKey(Key.ROOT)?props.get(Key.ROOT):old.root);
+		this.lightSources=(List<LightSource>) (props.containsKey(Key.LIGHT_SOURCES)?props.get(Key.LIGHT_SOURCES):old.lightSources);
 		this.camera=(Map<Object,Object>) (props.containsKey(Key.CAMERA)?props.get(Key.CAMERA):old.camera);
 	}
 
@@ -29,6 +34,7 @@ public class Scene extends ASceneObject {
 	public HashMap<Keyword, Object> getProperties() {
 		HashMap<Keyword,Object> props= super.getProperties();
 		props.put(Key.ROOT, root);
+		props.put(Key.LIGHT_SOURCES, lightSources);
 		props.put(Key.CAMERA, camera);
 		return props;
 	}
