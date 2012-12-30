@@ -18,6 +18,7 @@ public class Key {
 	public static final Keyword CENTRE=Keyword.intern(null, "centre");	
 	public static final Keyword RADIUS=Keyword.intern(null, "radius");
 
+	public static final Keyword POSITION = Keyword.intern(null, "position");
 	public static final Keyword NORMAL = Keyword.intern(null, "normal");
 	public static final Keyword DISTANCE = Keyword.intern(null, "distance");
 
