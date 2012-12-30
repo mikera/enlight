@@ -11,14 +11,18 @@ import enlight.Colour;
 import enlight.Key;
 
 public class LightSource extends ASceneObject {
+	private static final double DEFAULT_INTENSTY = 20;
+	
 	public final boolean shadowless;
 	public final Vector3 colour;
 	public final Vector3 position;
+	public final double intensity;
 		
 	public LightSource () {
 		shadowless=false;
 		colour=Colour.WHITE;
 		position=Vector3.of(0,0,0);
+		intensity=LightSource.DEFAULT_INTENSTY;
 	}
 	
 	protected LightSource(LightSource old, Map<Object, Object> props) {
@@ -26,6 +30,7 @@ public class LightSource extends ASceneObject {
 		shadowless=(Boolean) (props.containsKey(Key.SHADOWLESS)?props.get(Key.SHADOWLESS):old.shadowless);
 		colour=(Vector3) (props.containsKey(Key.COLOUR)?props.get(Key.COLOUR):old.colour);
 		position=(Vector3) (props.containsKey(Key.POSITION)?props.get(Key.POSITION):old.position);
+		intensity=(Double) (props.containsKey(Key.INTENSITY)?props.get(Key.INTENSITY):old.intensity);
 	}
 	
 	@Override
@@ -33,6 +38,8 @@ public class LightSource extends ASceneObject {
 		HashMap<Keyword,Object> hm=super.getProperties();
 		hm.put(Key.COLOUR, colour);
 		hm.put(Key.SHADOWLESS, shadowless);
+		hm.put(Key.POSITION, position);
+		hm.put(Key.INTENSITY, intensity);
 		return hm;
 	}
 	
