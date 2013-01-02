@@ -267,11 +267,11 @@
 ;; Raytracer core 
 
 (defn trace-ray
-  ([^ASceneObject scene-object ^Ray ray ^Vector4 colour-result]
+  ([^Scene scene ^Ray ray ^Vector4 colour-result]
     (let [result (IntersectionInfo.)]
-      (trace-ray scene-object ray colour-result result)))
-  ([^ASceneObject scene-object ^Ray ray ^Vector4 colour-result ^IntersectionInfo result]
-    (if (.getIntersection scene-object ray result)
+      (trace-ray scene ray colour-result result)))
+  ([^Scene scene ^Ray ray ^Vector4 colour-result ^IntersectionInfo result]
+    (if (.getIntersection (.root scene) ray result)
       (let [hit-object (.intersectionObject result)
             temp (v/vec3) ;; allocation! kill!
             pos (.intersectionPoint result)] 
@@ -295,7 +295,6 @@
   (let [width (int width)
         height (int height)
         ^Scene scene (compile-scene scene-desc)
-        ^ASceneObject root (or (.root scene) (error "Scene has no root object!"))
         camera (or (.camera scene) (error "Scene has no camera!"))
         colour-result (v/vec4 [0.5 0 0.8 1])
         ^Vector3 camera-pos (position camera)
@@ -312,7 +311,7 @@
           (v/add-multiple! dir camera-right xp)
           (v/add-multiple! dir camera-up (- yp))
           (v/normalise! dir)
-          (trace-ray (.root scene) (ray camera-pos dir) colour-result)
+          (trace-ray scene (ray camera-pos dir) colour-result)
           (.setRGB im ix iy (c/argb-from-vector4 colour-result)))))
     im)))
 
