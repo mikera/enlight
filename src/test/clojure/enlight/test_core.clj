@@ -33,10 +33,10 @@
 (deftest test-vector-compile
   (let [c (compile-all [1 2 3])]
     (is (v/vec? c))
-    (is (= 3 (v/length c))))
+    (is (= 3 (v/ecount c))))
   (let [c (compile-all [1])]
     (is (v/vec? c))
-    (is (= 1 (v/length c)))))
+    (is (= 1 (v/ecount c)))))
 
 (deftest test-plane-compile
   (let [c (compile-all [:plane])]
