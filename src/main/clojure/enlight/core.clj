@@ -263,6 +263,13 @@
   (^Ray [^Vector3 origin ^Vector3 direction]
     (Ray. origin direction)))
 
+(defn ray-from 
+  (^Ray [^Vector3 origin ^Vector3 target]
+    (let [^Vector3 n (.exactClone target)]
+      (.sub target origin)
+      (.normalise n)
+      (Ray. origin n))))
+
 ;; ======================================================
 ;; Raytracer core 
 
