@@ -17,6 +17,11 @@
   (^long [^AVector colour]
     (mikera.image.Colours/getRGBClamped (.get colour 0) (.get colour 1) (.get colour 2))))
 
+(defn rgb-from-vector3 
+  "Converts a colour vector into an ARGB colour value"
+  (^long [^Vector3 colour]
+    (mikera.image.Colours/getRGBClamped (.x colour) (.y colour) (.z colour))))
+
 (defn argb-from-vector4 
   "Converts a colour vector into an ARGB colour value"
   (^long [^Vector4 colour]
