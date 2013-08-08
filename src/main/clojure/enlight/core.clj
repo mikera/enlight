@@ -264,11 +264,9 @@
     (Ray. origin direction)))
 
 (defn ray-from 
+  "Creates a new ray from an origin to a specified target."
   (^Ray [^Vector3 origin ^Vector3 target]
-    (let [^Vector3 n (.exactClone target)]
-      (.sub target origin)
-      (.normalise n)
-      (Ray. origin n))))
+    (Ray. origin target)))
 
 ;; ======================================================
 ;; Raytracer core 
