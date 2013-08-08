@@ -280,8 +280,8 @@
         (.copyTo temp colour-result 0)
         (.set colour-result 3 1.0)  ;; clear transparency
       )
-      (.copyTo c/BLACK colour-result 0)
-      result)))
+      (.copyTo c/BLACK colour-result 0))
+    result))
 
 
 (defn new-image
