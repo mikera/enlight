@@ -267,6 +267,7 @@
 ;; Raytracer core 
 
 (defn trace-ray
+  "Traces a ray within a scene, returns an IntersectionInfo result."
   ([^Scene scene ^Ray ray ^Vector4 colour-result]
     (let [result (IntersectionInfo.)]
       (trace-ray scene ray colour-result result)))
@@ -279,7 +280,8 @@
         (.copyTo temp colour-result 0)
         (.set colour-result 3 1.0)  ;; clear transparency
       )
-      (.copyTo c/BLACK colour-result 0))))
+      (.copyTo c/BLACK colour-result 0)
+      result)))
 
 
 (defn new-image
