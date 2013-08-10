@@ -39,7 +39,7 @@ public interface ISceneObject {
 
 	/**
 	 * Creates a clone of this scene object with updated properties as specified.
-	 * @param properties New prperties to update
+	 * @param properties New properties to update
 	 * @return
 	 */
 	public ASceneObject with(Map<Object, Object> properties);
