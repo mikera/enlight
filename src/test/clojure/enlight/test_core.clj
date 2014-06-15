@@ -48,7 +48,7 @@
     (is (v/approx= (v/normalise (v/vec [1 1 1])) (:normal c))))
   (let [c (compile-all [:plane :colour [1 0 0]])]
     (is (scene-object? c))
-    (is (= (v/vec [1 0 0]) (m/* (:colour c) (v/vec [10 11 12]))))))
+    (is (= (v/vec [1 0 0]) (m/transform (:colour c) (v/vec [10 11 12]))))))
 
 (deftest test-sphere-compile
   (let [c (compile-all [:sphere])]
@@ -64,7 +64,7 @@
     (is (scene-object? c))
     (is (= :sphere (:type c)))
     (is (= 2.0 (:radius c)))
-    (is (= (v/vec [1 0 0]) (m/* (:colour c) (v/vec [10 11 12]))))))
+    (is (= (v/vec [1 0 0]) (m/transform (:colour c) (v/vec [10 11 12]))))))
 
 (deftest test-sky-sphere-compile
   (let [c (compile-all [:sky-sphere])]
